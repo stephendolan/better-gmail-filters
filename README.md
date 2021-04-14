@@ -7,7 +7,8 @@ This is a template project for web applications using [Lucky](https://luckyframe
 ### How to use it?
 
 - Click [this link](https://github.com/stephendolan/lucky_jumpstart/generate)
-- Run `lucky jumpstart.init` to initialize Jumpstart
+- Run `shards install`
+- Run `lucky jumpstart.init`
 - Run `./script/setup`
 - Run `lucky dev`
 
