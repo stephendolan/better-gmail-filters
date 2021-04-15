@@ -4,6 +4,10 @@ shards:
     git: https://github.com/crystal-ameba/ameba.git
     version: 0.14.2
 
+  any_hash:
+    git: https://github.com/Sija/any_hash.cr.git
+    version: 0.2.5
+
   authentic:
     git: https://github.com/luckyframework/authentic.git
     version: 0.7.3
@@ -11,6 +15,10 @@ shards:
   avram:
     git: https://github.com/luckyframework/avram.git
     version: 0.20.0
+
+  backtracer:
+    git: https://github.com/Sija/backtracer.cr.git
+    version: 1.2.1
 
   carbon:
     git: https://github.com/luckyframework/carbon.git
@@ -75,6 +83,10 @@ shards:
   pulsar:
     git: https://github.com/luckyframework/pulsar.git
     version: 0.2.2
+
+  raven:
+    git: https://github.com/Sija/raven.cr.git
+    version: 1.9.1+git.commit.d53319dc4ce26fc44f13b9c1c6ffb8699e22899b
 
   selenium:
     git: https://github.com/matthewmcgarvey/selenium.cr.git

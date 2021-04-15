@@ -7,5 +7,5 @@ end
 
 Application.configure do |settings|
   settings.name = "Better Gmail Filters"
-  settings.support_email = "no-reply@better_gmail_filters.com"
+  settings.support_email = "help@better_gmail_filters.com"
 end

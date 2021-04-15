@@ -4,6 +4,10 @@ class CreateUsers::V00000000000010 < Avram::Migrator::Migration::V1
       primary_key id : UUID
       add_timestamps
       add email : String, unique: true
+      add google_id : String, unique: true
+      add first_name : String?
+      add last_name : String?
+      add image_url : String?
     end
   end
 

@@ -9,7 +9,11 @@ class Me::ShowPage < MainLayout
         h1 "Your profile", class: "font-medium text-lg"
       end
       div class: "px-4 py-5 sm:p-6" do
+        h3 "First name:  #{current_user.first_name}"
+        h3 "Last name:  #{current_user.last_name}"
         h3 "Email:  #{current_user.email}"
+        h3 "Google ID:  #{current_user.google_id}"
+        img alt: "Profile image", class: "h-8 w-8 rounded-full", src: current_user.image
       end
     end
   end
