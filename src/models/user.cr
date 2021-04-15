@@ -3,11 +3,17 @@ class User < BaseModel
 
   table do
     column email : String
+
     column google_id : String
+    column google_access_token : String
+    column google_access_token_expires_at : Time
+    column google_refresh_token : String
 
     column first_name : String?
     column last_name : String?
     column image_url : String?
+
+    belongs_to team : Team
   end
 
   def full_name : String?

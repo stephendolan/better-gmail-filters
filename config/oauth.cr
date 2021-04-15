@@ -8,13 +8,16 @@ class GoogleAuthHandler
   end
 
   def self.authorize_uri(provider : String)
-    MultiAuth.make(provider, "#{Lucky::RouteHelper.settings.base_uri}/oauth/#{provider}/callback").authorize_uri(
+    default_uri = MultiAuth.make(provider, "#{Lucky::RouteHelper.settings.base_uri}/oauth/#{provider}/callback").authorize_uri(
       scope: [
         "https://www.googleapis.com/auth/userinfo.email",
         "https://www.googleapis.com/auth/userinfo.profile",
         "https://www.googleapis.com/auth/gmail.settings.basic",
       ].join(" ")
     )
+
+    # Add offline access to obtain a refresh token
+    default_uri + "&access_type=offline"
   end
 
   def self.user(provider : String, params : Enumerable({String, String}))

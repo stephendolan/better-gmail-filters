@@ -9,6 +9,7 @@ class Me::ShowPage < MainLayout
         h1 "Your profile", class: "font-medium text-lg"
       end
       div class: "px-4 py-5 sm:p-6" do
+        h3 "Team:  #{current_user.team.name}"
         h3 "First name:  #{current_user.first_name}"
         h3 "Last name:  #{current_user.last_name}"
         h3 "Email:  #{current_user.email}"
