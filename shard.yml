@@ -1,4 +1,4 @@
-name: lucky_jumpstart
+name: better_gmail_filters
 version: 0.1.0
 
 authors:
@@ -6,7 +6,7 @@ authors:
 
 targets:
   webserver:
-    main: src/lucky_jumpstart.cr
+    main: src/better_gmail_filters.cr
 
 crystal: 1.0.0
 
@@ -23,9 +23,9 @@ dependencies:
   lucky_env:
     github: luckyframework/lucky_env
     version: ~> 0.1.0
-  jwt:
-    github: crystal-community/jwt
-    version: ~> 1.5.0
+  multi_auth:
+    github: msa7/multi_auth
+    branch: master
 
 development_dependencies:
   ameba:

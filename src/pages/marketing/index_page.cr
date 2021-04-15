@@ -23,10 +23,6 @@ class Marketing::IndexPage < AuthLayout
                 text " Anim aute id magna aliqua ad ad non deserunt sunt. Qui irure qui lorem cupidatat commodo. Elit sunt amet fugiat veniam occaecat fugiat aliqua. "
               end
               div class: "mt-5 sm:mt-8 sm:flex sm:justify-center lg:justify-start" do
-                div class: "rounded-md shadow" do
-                  link "Sign up", to: SignUps::New, class: "w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-white bg-primary-600 hover:bg-primary-700 md:py-4 md:text-lg md:px-10", flow_id: "sign-up-button"
-                end
-
                 div class: "mt-3 sm:mt-0 sm:ml-3" do
                   link "Sign in", to: SignIns::New, class: "w-full flex items-center justify-center px-8 py-3 border border-transparent text-base font-medium rounded-md text-primary-700 bg-primary-100 hover:bg-primary-200 md:py-4 md:text-lg md:px-10", flow_id: "sign-in-button"
                 end

@@ -33,7 +33,7 @@ class Shared::Navbar < BaseComponent
   end
 
   private def render_logo
-    link "Lucky Jumpstart", to: Home::Index, class: "leading-8 font-extrabold tracking-tight text-gray-900 text-xl sm:leading-10 hover:text-gray-600"
+    link "Better Gmail Filters", to: Home::Index, class: "leading-8 font-extrabold tracking-tight text-gray-900 text-xl sm:leading-10 hover:text-gray-600"
   end
 
   private def render_hamburger_icon
@@ -58,7 +58,6 @@ class Shared::Navbar < BaseComponent
     div class: "pt-2 pb-3" do
       mount UI::NavbarHamburgerButton, &.link("Home", to: Home::Index, flow_id: "nav-hamburger-home-button")
       mount UI::NavbarHamburgerButton, &.link("Sign in", to: SignIns::New, flow_id: "nav-hamburger-sign-in-button")
-      mount UI::NavbarHamburgerButton, &.link("Sign up", to: SignUps::New, flow_id: "nav-hamburger-sign-up-button")
     end
   end
 
@@ -73,7 +72,6 @@ class Shared::Navbar < BaseComponent
   private def render_right_navbar(no_user : Nil)
     div class: "hidden sm:flex sm:space-x-2 items-center" do
       mount UI::Button, &.link("Sign In", to: SignIns::New, flow_id: "nav-sign-in-button")
-      mount UI::Button, &.link("Sign Up", to: SignUps::New, flow_id: "nav-sign-up-button")
     end
   end
 end

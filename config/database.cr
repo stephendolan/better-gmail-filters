@@ -1,4 +1,4 @@
-database_name = "lucky_jumpstart_#{Lucky::Env.name}"
+database_name = "better_gmail_filters_#{Lucky::Env.name}"
 
 AppDatabase.configure do |settings|
   if Lucky::Env.production?
