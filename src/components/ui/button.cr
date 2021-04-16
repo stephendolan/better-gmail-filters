@@ -1,8 +1,8 @@
 class UI::Button < BaseComponent
-  BUTTON_BACKGROUND_HOVER   = "bg-primary-500"
+  BUTTON_BACKGROUND_HOVER   = "hover:bg-primary-500"
   BUTTON_BACKGROUND_DEFAULT = "bg-primary-600"
-  BUTTON_BACKGROUND_ACTIVE  = "bg-primary-700"
-  BUTTON_BORDER_FOCUS       = "border-primary-700"
+  BUTTON_BACKGROUND_ACTIVE  = "active:bg-primary-700"
+  BUTTON_BORDER_FOCUS       = "focus:border-primary-700"
 
   enum Size
     Small
@@ -31,11 +31,11 @@ class UI::Button < BaseComponent
       "rounded",
       "text-white",
       "#{BUTTON_BACKGROUND_DEFAULT}",
-      "hover:#{BUTTON_BACKGROUND_HOVER}",
+      "#{BUTTON_BACKGROUND_HOVER}",
       "focus:outline-none",
-      "focus:#{BUTTON_BORDER_FOCUS}",
+      "#{BUTTON_BORDER_FOCUS}",
       "focus:shadow-outline-primary",
-      "active:#{BUTTON_BACKGROUND_ACTIVE}",
+      "#{BUTTON_BACKGROUND_ACTIVE}",
       "transition",
       "ease-in-out",
       "duration-150",
@@ -47,8 +47,8 @@ class UI::Button < BaseComponent
               when Size::Small
                 %w[
                   text-xs
-                  px-2.5
-                  py-1.5
+                  px-2
+                  py-1
                 ]
               when Size::Medium
                 %w[

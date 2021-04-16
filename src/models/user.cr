@@ -14,6 +14,8 @@ class User < BaseModel
     column image_url : String?
 
     belongs_to team : Team
+
+    has_many categories : Category, foreign_key: :owner_id
   end
 
   def full_name : String?
