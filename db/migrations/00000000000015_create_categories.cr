@@ -1,4 +1,4 @@
-class CreateCategories::V20210416024853 < Avram::Migrator::Migration::V1
+class CreateCategories::V00000000000015 < Avram::Migrator::Migration::V1
   def migrate
     # Learn about migrations at: https://luckyframework.org/guides/database/migrations
     create table_for(Category) do
