@@ -15,7 +15,7 @@ class Dashboard::IndexPage < MainLayout
             end
           end
           div class: "ml-4 mt-2 flex-shrink-0 flex space-x-3" do
-            mount UI::Button, &.link "Export filters to XML", to: Home::Index
+            mount UI::Button, &.link "Export filters to XML", to: Filters::Index
             mount UI::Button, &.link "New category", to: Categories::New
           end
         end
@@ -101,7 +101,7 @@ class Dashboard::IndexPage < MainLayout
   end
 
   private def render_filter(filter : Filter)
-    div class: "relative rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-indigo-500" do
+    div class: "relative rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500" do
       div class: "flex-shrink-0" do
         div class: "h-10 w-10 bg-primary-600 rounded-full flex items-center justify-center" do
           render_filter_icon

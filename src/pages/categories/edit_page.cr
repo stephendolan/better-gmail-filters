@@ -16,7 +16,7 @@ class Categories::EditPage < MainLayout
   end
 
   def render_category_form(op)
-    form_for Categories::Create, class: "divide-y divide-gray-200" do
+    form_for Categories::Update.with(category.id), class: "divide-y divide-gray-200" do
       div class: "px-4 py-5 sm:p-6" do
         mount Categories::FormFields, op
       end

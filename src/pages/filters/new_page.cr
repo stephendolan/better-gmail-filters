@@ -3,7 +3,7 @@ class Filters::NewPage < MainLayout
   quick_def page_title, "New Filter"
 
   def content
-    div class: "bg-white overflow-hidden shadow rounded-lg divide-y divide-gray-200" do
+    div class: "bg-white overflow-hidden shadow sm:rounded-lg divide-y divide-gray-200" do
       div class: "px-4 py-5 sm:px-6" do
         h3 class: "text-lg leading-6 font-medium text-gray-900" do
           text "New filter"
@@ -17,7 +17,7 @@ class Filters::NewPage < MainLayout
   def render_filter_form(op)
     form_for Filters::Create, class: "divide-y divide-gray-200" do
       div class: "px-4 py-5 sm:p-6 space-y-4" do
-        mount Filters::FormFields, op
+        mount Filters::FormFields, op, current_user: current_user
       end
 
       div class: "px-4 py-4 sm:px-6" do

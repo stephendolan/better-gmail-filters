@@ -1,5 +1,9 @@
 class Filters::Show < BrowserAction
+  accepted_formats [:html, :xml], default: :html
+
   get "/filters/:filter_id" do
-    html Filters::ShowPage, filter: FilterQuery.find(filter_id)
+    filter = FilterQuery.new.preload_category.find(filter_id)
+
+    html Filters::ShowPage, filter: filter
   end
 end
