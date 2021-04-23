@@ -25,7 +25,10 @@ class Filters::FormFields < BaseComponent
           end
         end
 
-        mount Shared::Field, operation.search_query, &.textarea
+        div do
+          mount Shared::Field, operation.search_query, &.textarea
+          small "Enter placeholders like '{{placeholder}}', and you can give them values later!", class: "ml-2 text-primary-700 font-medium"
+        end
       end
 
       div do

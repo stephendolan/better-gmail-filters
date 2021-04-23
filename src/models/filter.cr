@@ -2,6 +2,7 @@ class Filter < BaseModel
   table do
     belongs_to category : Category?
     belongs_to creator : User
+    has_many filter_placeholders : FilterPlaceholder
 
     column name : String
     column search_query : String

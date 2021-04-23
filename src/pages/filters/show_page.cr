@@ -42,6 +42,17 @@ class Filters::ShowPage < MainLayout
 
             div class: "sm:col-span-2" do
               dt class: "text-sm font-medium text-gray-500" do
+                text "Parameters"
+              end
+              dd class: "mt-1 py-2 pl-2 text-sm text-gray-900" do
+                filter.filter_placeholders.each do |placeholder|
+                  div placeholder.name
+                end
+              end
+            end
+
+            div class: "sm:col-span-2" do
+              dt class: "text-sm font-medium text-gray-500" do
                 text "Actions"
               end
               dd class: "mt-1 text-sm text-gray-900" do
