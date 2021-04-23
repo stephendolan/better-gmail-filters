@@ -110,12 +110,19 @@ class Dashboard::IndexPage < MainLayout
       div class: "flex-1 min-w-0" do
         link to: Filters::Show.with(filter.id), class: "focus:outline-none" do
           span aria_hidden: "true", class: "absolute inset-0"
+
           para class: "text-sm font-medium text-gray-900" do
             text filter.name
           end
+
           para class: "text-sm text-gray-500 truncate" do
             text filter.search_query
           end
+        end
+      end
+      div class: "flex-shrink-0" do
+        div class: "bg-primary-600 rounded-full flex items-center justify-center text-xs text-white px-2 py-1" do
+          text "#{filter.search_permutations.size} dynamic searches"
         end
       end
     end

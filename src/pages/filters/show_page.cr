@@ -44,9 +44,20 @@ class Filters::ShowPage < MainLayout
               dt class: "text-sm font-medium text-gray-500" do
                 text "Parameters"
               end
-              dd class: "mt-1 py-2 pl-2 text-sm text-gray-900" do
+              dd class: "mt-1 py-2 text-sm text-gray-900 space-y-2" do
                 filter.filter_placeholders.each do |placeholder|
-                  div placeholder.name
+                  div class: "max-w-lg flex rounded-md shadow-sm" do
+                    link to: FilterPlaceholders::Edit.with(placeholder.id), class: "inline-flex items-center px-3 py-1 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 hover:bg-gray-100 text-primary-700 hover:text-primary-900 sm:text-sm font-medium" do
+                      text placeholder.name
+                    end
+                    span class: "flex-1 block px-3 py-1 rounded-r-md w-full min-w-0 sm:text-sm border border-gray-300" do
+                      if placeholder.values.empty?
+                        text "No value set"
+                      else
+                        text placeholder.values.join(", ")
+                      end
+                    end
+                  end
                 end
               end
             end
