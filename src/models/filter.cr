@@ -26,7 +26,6 @@ class Filter < BaseModel
     raise "A supplied placeholder has no value assigned" if placeholder_values.any?(&.empty?)
 
     placeholder_permutations = Array.product(placeholder_values)
-    pp placeholder_permutations
 
     output_strings = [] of String
 

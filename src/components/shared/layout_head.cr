@@ -5,6 +5,10 @@ class Shared::LayoutHead < BaseComponent
 
   def render
     head do
+      if Lucky::Env.production?
+        script src: "https://#{Fathom.settings.domain}/script.js", data_site: Fathom.settings.site_id, attrs: [:defer]
+      end
+
       utf8_charset
       title "#{Application.settings.name} - #{@page_title}"
       css_link asset("css/app.css"), data_turbolinks_track: "reload"

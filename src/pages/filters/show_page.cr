@@ -42,7 +42,7 @@ class Filters::ShowPage < MainLayout
 
             div class: "sm:col-span-2" do
               dt class: "text-sm font-medium text-gray-500" do
-                text "Parameters"
+                text "Parameters (#{pluralize(filter.search_permutations.size, "dynamic search")})"
               end
               dd class: "mt-1 py-2 text-sm text-gray-900 space-y-2" do
                 filter.filter_placeholders.each do |placeholder|
