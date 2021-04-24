@@ -13,7 +13,8 @@ class User < BaseModel
     column last_name : String?
     column image_url : String?
 
-    belongs_to team : Team
+    has_many team_users : TeamUser
+    has_many teams : Team, through: [:team_users, :team]
 
     has_many categories : Category, foreign_key: :owner_id
   end
@@ -22,6 +23,13 @@ class User < BaseModel
     return nil unless first_name || last_name
 
     [first_name, last_name].compact.join(" ")
+  end
+
+  # While the Team schema structure supports many teams, we only functionally
+  # use a "Personal" team for each user at the moment. This provides a convenient
+  # shortcut that we can use because of this intentional limitation.
+  def subscription : Subscription?
+    teams.first.subscription
   end
 
   # Since Google might not have an image URL, fall back to Gravatar.

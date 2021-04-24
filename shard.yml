@@ -26,9 +26,15 @@ dependencies:
   multi_auth:
     github: msa7/multi_auth
     branch: master
+  decorator:
+    github: stephendolan/decorator
+    version: ~> 1.0.0
   raven:
     github: Sija/raven.cr
     branch: master
+  stripe:
+    github: confact/stripe.cr
+    version: ~> 1.3.0
 
 development_dependencies:
   ameba:

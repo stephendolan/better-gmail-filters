@@ -11,7 +11,6 @@ class CreateUsers::V00000000000010 < Avram::Migrator::Migration::V1
       add first_name : String?
       add last_name : String?
       add image_url : String?
-      add_belongs_to team : Team, on_delete: :restrict, foreign_key_type: UUID
     end
   end
 

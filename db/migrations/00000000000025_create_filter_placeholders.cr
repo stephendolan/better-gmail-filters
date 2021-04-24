@@ -1,4 +1,4 @@
-class CreateFilterPlaceholders::V20210422214149 < Avram::Migrator::Migration::V1
+class CreateFilterPlaceholders::V00000000000025 < Avram::Migrator::Migration::V1
   def migrate
     # Learn about migrations at: https://luckyframework.org/guides/database/migrations
     create table_for(FilterPlaceholder) do

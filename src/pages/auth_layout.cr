@@ -1,6 +1,8 @@
 abstract class AuthLayout
   include Lucky::HTMLPage
 
+  needs current_user : User?
+
   abstract def content
   abstract def page_title
 

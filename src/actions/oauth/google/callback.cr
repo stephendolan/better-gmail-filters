@@ -33,11 +33,18 @@ class OAuth::Google::Callback < BrowserAction
   private def new_user_from_google(google_user : GoogleUser) : User
     team = SaveTeam.create!(name: "Personal")
 
-    SaveUser.create!(
+    user = SaveUser.create!(
       **default_google_user_params(google_user),
-      email: google_user.email,
-      team_id: team.id
+      email: google_user.email
     )
+
+    SaveTeamUser.create!(
+      team_id: team.id,
+      user_id: user.id,
+      is_admin: true,
+    )
+
+    user
   end
 
   # Updates a user from google, containing everything *except* the email address.
