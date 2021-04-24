@@ -1,11 +1,13 @@
 class Application
   Habitat.create do
     setting name : String
-    setting support_email : String
+    setting domain : String
+    setting support_email : Carbon::Address
   end
 end
 
 Application.configure do |settings|
   settings.name = "Better Gmail Filters"
-  settings.support_email = "help@better_gmail_filters.com"
+  settings.domain = "bettergmailfilters.com"
+  settings.support_email = Carbon::Address.new(settings.name, "support@bettergmailfilters.com")
 end
