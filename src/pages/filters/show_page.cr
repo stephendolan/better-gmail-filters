@@ -40,21 +40,31 @@ class Filters::ShowPage < MainLayout
               end
             end
 
-            div class: "sm:col-span-2" do
+            if filter.filter_placeholders.empty?
               dt class: "text-sm font-medium text-gray-500" do
-                text "Parameters (#{pluralize(filter.search_permutations.size, "dynamic search")})"
+                text "No placeholders. Use '{{ my_placeholder }}' in your search query to create some!"
               end
-              dd class: "mt-1 py-2 text-sm text-gray-900 space-y-2" do
-                filter.filter_placeholders.each do |placeholder|
-                  div class: "max-w-lg flex rounded-md shadow-sm" do
-                    link to: FilterPlaceholders::Edit.with(placeholder.id), class: "inline-flex items-center px-3 py-1 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 hover:bg-gray-100 text-primary-700 hover:text-primary-900 sm:text-sm font-medium" do
-                      text placeholder.name
-                    end
-                    span class: "flex-1 block px-3 py-1 rounded-r-md w-full min-w-0 sm:text-sm border border-gray-300" do
-                      if placeholder.values.empty?
-                        text "No value set"
-                      else
-                        text placeholder.values.join(", ")
+            else
+              div class: "sm:col-span-2" do
+                dt class: "text-sm font-medium text-gray-500" do
+                  text "Placeholders (#{pluralize(filter.search_permutations.size, "dynamic search")})"
+                end
+                dd class: "mt-1 py-2 text-sm text-gray-900 space-y-2" do
+                  filter.filter_placeholders.each do |placeholder|
+                    div class: "max-w-lg flex rounded-md shadow-sm" do
+                      link to: FilterPlaceholders::Edit.with(placeholder.id), class: "inline-flex items-center px-3 py-1 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 hover:bg-gray-100 text-primary-700 hover:text-primary-900 sm:text-sm font-medium" do
+                        tag "svg", class: "h-4 w-4", fill: "currentColor", viewBox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg" do
+                          tag "path", d: "M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
+                        end
+
+                        span placeholder.name, class: "ml-1"
+                      end
+                      span class: "flex-1 block px-3 py-1 rounded-r-md w-full min-w-0 sm:text-sm border border-gray-300" do
+                        if placeholder.values.empty?
+                          text "No value set"
+                        else
+                          text placeholder.values.join(", ")
+                        end
                       end
                     end
                   end
