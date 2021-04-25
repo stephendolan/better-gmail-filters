@@ -17,6 +17,7 @@ class User < BaseModel
     has_many teams : Team, through: [:team_users, :team]
 
     has_many categories : Category, foreign_key: :owner_id
+    has_many filters : Filter, through: [:categories, :filters]
   end
 
   def full_name : String?
