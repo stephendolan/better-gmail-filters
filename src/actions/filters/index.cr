@@ -6,6 +6,6 @@ class Filters::Index < BrowserAction
     data xml_data,
       disposition: "attachment",
       filename: "better-gmail-filters.xml",
-      content_type: "application/xml"
+      content_type: "text/xml"
   end
 end
