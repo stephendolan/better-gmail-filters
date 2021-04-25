@@ -43,6 +43,8 @@ class Filters::FormFields < BaseComponent
       hr
 
       div class: "mt-6 sm:mt-5 space-y-6 sm:space-y-5" do
+        mount Shared::Field, operation.should_apply_label, "Apply label"
+
         div class: "flex items-start" do
           div class: "h-5 flex items-center" do
             checkbox(operation.should_mark_as_read, class: "focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded")
@@ -89,8 +91,6 @@ class Filters::FormFields < BaseComponent
         end
 
         mount Shared::Field, operation.should_forward_to, "Forward to", &.email_input
-
-        mount Shared::Field, operation.should_apply_label, "Apply label"
       end
     end
   end
