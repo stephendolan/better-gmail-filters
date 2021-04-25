@@ -21,6 +21,12 @@ class Dashboard::IndexPage < MainLayout
         end
       end
 
+      unless current_user.subscription
+        div class: "px-4 pt-5 sm:px-6" do
+          render_free_tier_progress_bar
+        end
+      end
+
       div class: "px-4 py-5 sm:p-6" do
         if categories.empty?
           render_create_category
@@ -122,7 +128,7 @@ class Dashboard::IndexPage < MainLayout
       end
       div class: "flex-shrink-0" do
         div class: "bg-primary-600 rounded-full flex items-center justify-center text-xs text-white px-2 py-1" do
-          text "#{filter.search_permutations.size} dynamic searches"
+          text "#{filter.search_permutations.size} dynamic filters"
         end
       end
     end
@@ -131,6 +137,31 @@ class Dashboard::IndexPage < MainLayout
   private def render_filter_icon
     tag "svg", class: "text-white h-5 w-5", fill: "currentColor", viewBox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg" do
       tag "path", d: "M5 4a1 1 0 00-2 0v7.268a2 2 0 000 3.464V16a1 1 0 102 0v-1.268a2 2 0 000-3.464V4zM11 4a1 1 0 10-2 0v1.268a2 2 0 000 3.464V16a1 1 0 102 0V8.732a2 2 0 000-3.464V4zM16 3a1 1 0 011 1v7.268a2 2 0 010 3.464V16a1 1 0 11-2 0v-1.268a2 2 0 010-3.464V4a1 1 0 011-1z"
+    end
+  end
+
+  private def render_free_tier_progress_bar
+    filter_limit = Subscription::FREE_TIER_FILTER_LIMIT
+    filter_count = categories.flat_map(&.filters.flat_map(&.search_permutations)).size
+    free_tier_usage_percent = ((filter_count / filter_limit) * 100).to_i
+
+    div class: "space-y-2" do
+      div class: "flex items-center justify-between" do
+        div do
+          link to: Subscriptions::Index, class: "text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-primary-600 hover:text-primary-700 bg-primary-200 hover:bg-primary-300" do
+            text "#{filter_count} / #{filter_limit} filters in free tier"
+          end
+        end
+        div class: "text-right" do
+          span class: "text-xs font-semibold inline-block text-primary-600" do
+            text "#{free_tier_usage_percent}%"
+          end
+        end
+      end
+
+      div class: "overflow-hidden h-2 text-xs flex rounded bg-primary-200" do
+        div class: "shadow-none flex flex-col text-center whitespace-nowrap text-white justify-center bg-primary-500", style: "width:#{free_tier_usage_percent}%"
+      end
     end
   end
 end

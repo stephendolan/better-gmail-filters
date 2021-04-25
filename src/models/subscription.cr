@@ -1,4 +1,6 @@
 class Subscription < BaseModel
+  FREE_TIER_FILTER_LIMIT = 50
+
   table do
     column stripe_id : String
     column is_active : Bool
