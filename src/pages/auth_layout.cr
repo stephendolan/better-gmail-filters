@@ -20,10 +20,15 @@ abstract class AuthLayout
     html lang: "en" do
       mount Shared::LayoutHead, page_title: page_title, context: context
 
-      body do
+      body class: "min-h-screen flex flex-col bg-gray-50" do
         mount Shared::FlashMessages, context.flash
         mount Shared::Navbar, simple: true
-        content
+
+        main class: "flex-1" do
+          content
+        end
+
+        mount Shared::Footer
       end
     end
   end
