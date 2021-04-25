@@ -1,8 +1,8 @@
 name: better_gmail_filters
-version: 0.1.0
+version: 1.0.0
 
 authors:
-  - your-name-here <your-email-here>
+  - Stephen Dolan <stephen@luckycasts.com>
 
 targets:
   webserver:
@@ -35,6 +35,9 @@ dependencies:
   stripe:
     github: confact/stripe.cr
     version: ~> 1.3.0
+  pundit:
+    github: stephendolan/pundit
+    version: ~> 0.10.0
 
 development_dependencies:
   ameba:

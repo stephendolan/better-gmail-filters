@@ -1,6 +1,8 @@
 class Filters::Delete < BrowserAction
   delete "/filters/:filter_id" do
-    FilterQuery.find(filter_id).delete
+    filter = FilterQuery.find(filter_id)
+    authorize filter
+    filter.delete
     redirect Home::Index
   end
 end

@@ -21,7 +21,7 @@ class Dashboard::IndexPage < MainLayout
         end
       end
 
-      unless current_user.subscription
+      unless current_user.subscription.try(&.is_active?)
         div class: "px-4 pt-5 sm:px-6" do
           render_free_tier_progress_bar
         end
@@ -47,8 +47,15 @@ class Dashboard::IndexPage < MainLayout
             end
 
             div class: "flex space-x-2" do
-              mount UI::Button, size: UI::Button::Size::Small, &.link to: Filters::New.with(default_category: category.id) do
-                render_plus_icon
+              if FilterPolicy.new(current_user).create?
+                mount UI::Button, size: UI::Button::Size::Small, &.link to: Filters::New.with(default_category: category.id) do
+                  render_plus_icon
+                  span "Add a filter", class: "ml-1"
+                end
+              else
+                mount UI::Button, size: UI::Button::Size::Small, &.link to: Subscriptions::Index do
+                  text "Upgrade to add more filters"
+                end
               end
 
               mount UI::Button, size: UI::Button::Size::Small, &.link to: Categories::Edit.with(category) do
@@ -143,7 +150,11 @@ class Dashboard::IndexPage < MainLayout
   private def render_free_tier_progress_bar
     filter_limit = Subscription::FREE_TIER_FILTER_LIMIT
     filter_count = categories.flat_map(&.filters.flat_map(&.search_permutations)).size
+
     free_tier_usage_percent = ((filter_count / filter_limit) * 100).to_i
+    if free_tier_usage_percent >= 100
+      free_tier_usage_percent = 100
+    end
 
     div class: "space-y-2" do
       div class: "flex items-center justify-between" do

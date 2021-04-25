@@ -16,6 +16,16 @@ class Errors::Show < Lucky::ErrorAction
     end
   end
 
+  # Capture Pundit authorization exceptions to handle it elegantly
+  def render(error : Pundit::NotAuthorizedError)
+    if html?
+      flash.failure = "Sorry, you're not allowed to do that."
+      redirect_back fallback: Home::Index
+    else
+      error_json "Not authorized", status: 401
+    end
+  end
+
   # When the request is JSON and an InvalidOperationError is raised, show a
   # helpful error with the param that is invalid, and what was wrong with it.
   def render(error : Avram::InvalidOperationError)

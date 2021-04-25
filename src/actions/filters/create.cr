@@ -1,5 +1,7 @@
 class Filters::Create < BrowserAction
   post "/filters" do
+    authorize
+
     SaveFilter.create(params, creator: current_user) do |operation, filter|
       if filter
         redirect Filters::Show.with(filter.id)

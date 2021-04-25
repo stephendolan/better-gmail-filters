@@ -1,5 +1,7 @@
 class Filters::Index < BrowserAction
   get "/filters" do
+    authorize
+
     filters = FilterQuery.new.preload_filter_placeholders.creator_id(current_user.id)
     xml_data = FilterSerializer.for_collection(filters)
 

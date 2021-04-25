@@ -1,5 +1,7 @@
 class Categories::Create < BrowserAction
   post "/categories" do
+    authorize
+
     SaveCategory.create(params, current_user: current_user) do |operation, category|
       if category
         redirect Home::Index

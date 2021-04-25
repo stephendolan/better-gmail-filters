@@ -88,6 +88,10 @@ shards:
     git: https://github.com/luckyframework/pulsar.git
     version: 0.2.2
 
+  pundit:
+    git: https://github.com/stephendolan/pundit.git
+    version: 0.10.0
+
   raven:
     git: https://github.com/Sija/raven.cr.git
     version: 1.9.1+git.commit.d53319dc4ce26fc44f13b9c1c6ffb8699e22899b

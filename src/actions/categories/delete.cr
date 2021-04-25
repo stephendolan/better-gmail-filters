@@ -1,6 +1,9 @@
 class Categories::Delete < BrowserAction
   delete "/categories/:category_id" do
-    CategoryQuery.find(category_id).delete
+    category = CategoryQuery.find(category_id)
+    authorize category
+
+    category.delete
     redirect Home::Index
   end
 end

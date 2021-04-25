@@ -1,6 +1,6 @@
 class Filter < BaseModel
   table do
-    belongs_to category : Category?
+    belongs_to category : Category
     belongs_to creator : User
     has_many filter_placeholders : FilterPlaceholder
 
@@ -14,6 +14,16 @@ class Filter < BaseModel
     column should_mark_important : Bool = false
     column should_forward_to : String?
     column should_apply_label : String?
+  end
+
+  def siblings(in_same_category : Bool = true) : FilterQuery
+    query = if in_same_category
+              FilterQuery.new.category_id(category_id).id.not.eq(id)
+            else
+              FilterQuery.new.creator_id(creator_id).id.not.eq(id)
+            end
+
+    query.preload_filter_placeholders
   end
 
   def search_permutations : Array(String)
