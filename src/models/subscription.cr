@@ -1,5 +1,5 @@
 class Subscription < BaseModel
-  FREE_TIER_FILTER_LIMIT = 50
+  FREE_TIER_FILTER_LIMIT = 25
 
   table do
     column stripe_id : String
