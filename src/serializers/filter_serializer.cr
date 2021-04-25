@@ -2,7 +2,7 @@ require "xml"
 
 class FilterSerializer < BaseSerializer
   def self.for_collection(filters : FilterQuery)
-    XML.build do |xml|
+    XML.build(indent: "  ") do |xml|
       xml.element "feed", xmlns: "http://www.w3.org/2005/Atom", "xmlns:apps": "http://schemas.google.com/apps/2006" do
         xml.element "title" { xml.text Application.settings.name }
         filters.each do |filter|
