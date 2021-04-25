@@ -20,17 +20,16 @@ class Filter < BaseModel
     placeholders = filter_placeholders
     return [search_query] if placeholders.empty?
 
-    string_to_replace = search_query
-
     placeholder_values = placeholders.map { |placeholder| placeholder.values.map { |value| {placeholder.name => value} } }
-    raise "A supplied placeholder has no value assigned" if placeholder_values.any?(&.empty?)
+    placeholder_values.reject!(&.empty?)
+    return [search_query] if placeholder_values.empty?
 
     placeholder_permutations = Array.product(placeholder_values)
 
     output_strings = [] of String
 
     placeholder_permutations.each do |replacement_set|
-      return_string = string_to_replace
+      return_string = search_query
 
       replacement_set.each do |placeholder_tuple|
         placeholder_tuple.each_key do |placeholder_name|
