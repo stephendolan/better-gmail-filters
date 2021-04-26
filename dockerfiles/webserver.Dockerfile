@@ -28,10 +28,10 @@ COPY --from=webpack_build /tmp_webpack/public public
 RUN crystal build tasks.cr -o /usr/local/bin/lucky
 
 # Build the application binary in a Crystal container
-FROM crystallang/crystal:1.0.0-alpine as binary_build
+FROM crystallang/crystal:1.0.0-alpine as webserver_build
 RUN apk --no-cache add yaml-static
 ENV LUCKY_ENV=production
-WORKDIR /tmp_binary_build
+WORKDIR /tmp_webserver_build
 COPY . .
 COPY --from=crystal_dependencies /tmp_crystal/lib lib
 COPY --from=webpack_build /tmp_webpack/public public
@@ -43,6 +43,6 @@ ENV LUCKY_ENV=production
 ENV NODE_ENV=production
 WORKDIR /app
 COPY --from=lucky_build /usr/local/bin/lucky lucky
-COPY --from=binary_build /usr/local/bin/lucky-app lucky-app
+COPY --from=webserver_build /usr/local/bin/lucky-app lucky-app
 COPY --from=webpack_build /tmp_webpack/public public
 CMD ["./lucky-app"]
