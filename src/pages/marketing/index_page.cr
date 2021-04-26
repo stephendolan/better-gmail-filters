@@ -14,7 +14,7 @@ class Marketing::IndexPage < AuthLayout
             tag "polygon", points: "50,0 100,0 50,100 0,100"
           end
           main class: "pt-10 mx-auto max-w-7xl px-4 sm:pt-12 sm:px-6 md:pt-16 lg:pt-20 lg:px-8 xl:pt-28" do
-            div class: "sm:text-center lg:text-left" do
+            div class: "text-center lg:text-left" do
               h1 class: "text-4xl tracking-tight font-extrabold text-gray-900 sm:text-5xl md:text-6xl" do
                 span "Level up your", class: "block xl:inline"
                 span " Gmail filters", class: "block text-primary-600 xl:inline"
@@ -22,8 +22,8 @@ class Marketing::IndexPage < AuthLayout
               para class: "mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0" do
                 text " Gmail's interface for managing filters sucks, so we fixed it. Group your filters with categories, adjust filter actions intuitively, and generate complex dynamic filters with placeholders."
               end
-              div class: "mt-8 sm:ml-3" do
-                link OAuth::Google::Connect, class: "w-2/3 inline-flex items-center justify-center py-4 px-8 space-x-2 border border-gray-400 sm:rounded-md shadow-sm bg-white font-medium text-gray-900 hover:bg-gray-50" do
+              div class: "mt-8" do
+                link OAuth::Google::Connect, class: "w-5/12 inline-flex items-center justify-center py-4 px-8 space-x-2 border border-gray-400 rounded-md shadow-sm bg-white font-medium text-gray-900 hover:bg-gray-50" do
                   span "Sign in with "
                   span "Google", class: "sr-only"
                   render_google_logo
