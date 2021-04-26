@@ -19,20 +19,12 @@ module Stripe::SignatureVerification
 
   private def verify_stripe_signature
     signature = StripeSignatureHeader.new(request.headers["stripe-signature"])
-    puts "Stripe signature:"
-    puts signature.timestamp
-    puts signature.v1_scheme
-
-    puts "Signing secret:"
-    puts Stripe.settings.webhook_signing_secret
 
     if signature_timestamp_too_old?(signature)
-      puts "Signature timestamp was too old!"
       head :forbidden
     elsif signatures_match?(signature)
       continue
     else
-      puts "Signature did not match"
       head :forbidden
     end
   end
@@ -45,9 +37,6 @@ module Stripe::SignatureVerification
       key: Stripe.settings.webhook_signing_secret,
       data: signed_payload
     )
-
-    puts "Expected signature:"
-    puts expected_signature
 
     expected_signature == signature.v1_scheme
   end
