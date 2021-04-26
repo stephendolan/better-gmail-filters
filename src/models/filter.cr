@@ -26,6 +26,12 @@ class Filter < BaseModel
     query.preload_filter_placeholders
   end
 
+  def placeholders : Array(String)
+    StringWithPlaceholders.new(search_query).placeholders |
+      StringWithPlaceholders.new(should_apply_label).placeholders |
+      StringWithPlaceholders.new(should_forward_to).placeholders
+  end
+
   def search_permutations : Array(String)
     placeholders = filter_placeholders
     return [search_query] if placeholders.empty?

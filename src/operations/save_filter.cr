@@ -14,6 +14,8 @@ class SaveFilter < Filter::SaveOperation
     should_forward_to,
     should_apply_label
 
+  attribute readonly_account_labels : String
+
   before_save do
     set_creator
     validate_not_over_placeholder_limit
@@ -27,7 +29,11 @@ class SaveFilter < Filter::SaveOperation
 
   private def validate_not_over_placeholder_limit
     placeholder_limit = 5
-    placeholder_count = placeholders_from_search_query(search_query.value || "").size
+    placeholder_count = [
+      StringWithPlaceholders.new(search_query.value),
+      StringWithPlaceholders.new(should_apply_label.value),
+      StringWithPlaceholders.new(should_forward_to.value),
+    ].sum(&.placeholders.size)
     placeholders_to_remove = placeholder_count - placeholder_limit
 
     if placeholder_count > placeholder_limit
@@ -36,7 +42,7 @@ class SaveFilter < Filter::SaveOperation
   end
 
   private def create_filter_placeholders(saved_filter : Filter)
-    placeholders = placeholders_from_search_query(saved_filter.search_query)
+    placeholders = saved_filter.placeholders
 
     # Remove placeholders that are no longer necessary
     FilterPlaceholderQuery.new.filter_id(saved_filter.id).name.lower.not.in(placeholders).delete
@@ -52,15 +58,5 @@ class SaveFilter < Filter::SaveOperation
         values: [] of String
       )
     end
-  end
-
-  private def placeholders_from_search_query(search_query : String) : Array(String)
-    greedy_pattern = /{{\s*(.*?)\s*}}/
-    search_query
-      .scan(greedy_pattern)
-      .flat_map(&.captures)
-      .reject(&.blank?)
-      .compact
-      .uniq!
   end
 end

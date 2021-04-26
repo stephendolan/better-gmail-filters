@@ -183,7 +183,7 @@ class Dashboard::IndexPage < MainLayout
   end
 
   private def render_empty_categories_image
-    tag "svg", class: "h-auto w-full", data_name: "Layer 1", height: "789.93", id: "9af98f83-10c5-4067-bc84-20554b2827d8", viewBox: "0 0 1009.54 789.93", width: "1009.54", xlink: "http://www.w3.org/1999/xlink", xmlns: "http://www.w3.org/2000/svg" do
+    tag "svg", class: "h-auto w-3/4 mx-auto", data_name: "Layer 1", height: "789.93", id: "9af98f83-10c5-4067-bc84-20554b2827d8", viewBox: "0 0 1009.54 789.93", width: "1009.54", xlink: "http://www.w3.org/1999/xlink", xmlns: "http://www.w3.org/2000/svg" do
       tag "defs" do
         tag "linearGradient", gradientUnits: "userSpaceOnUse", id: "07c62293-c0d3-4921-8e06-4e39241449cd", x1: "318.22", x2: "630.35", y1: "488.45", y2: "488.45" do
           tag "stop", offset: "0", stop_color: "gray", stop_opacity: "0.25"

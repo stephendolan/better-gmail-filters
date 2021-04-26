@@ -27,7 +27,7 @@ class Filters::FormFields < BaseComponent
 
         div do
           mount Shared::Field, operation.search_query, "Gmail search query", &.textarea
-          small "Enter up to 5 unique placeholders like '{{placeholder}}', and you can give them values later!", class: "ml-2 text-primary-700 font-medium"
+          small "Enter up to 5 unique placeholders like 'from:receipts@{{invoice_company}}', and you can give them values later!", class: "ml-2 text-primary-700 font-medium"
         end
       end
 
@@ -43,12 +43,20 @@ class Filters::FormFields < BaseComponent
       hr
 
       div class: "mt-6 sm:mt-5 space-y-6 sm:space-y-5" do
-        mount Shared::Field, operation.should_apply_label, "Apply label" do |input_html|
-          input_html.select_input do
-            select_prompt("Select label") if operation.should_apply_label.nil?
-            options_for_select(operation.should_apply_label, label_options)
+        div class: "grid grid-cols-4 gap-4" do
+          div class: "col-span-3" do
+            mount Shared::Field, operation.should_apply_label, "Apply label", &.text_input
+          end
+
+          div class: "col-span-1" do
+            mount Shared::Field, operation.readonly_account_labels, "Current Gmail labels" do |input_html|
+              input_html.select_input append_class: "flex-1" do
+                options_for_select(operation.readonly_account_labels, label_options)
+              end
+            end
           end
         end
+        small "Enter up to 5 unique placeholders like 'Accounts/{{customer}}', and you can give them values later!", class: "ml-2 text-primary-700 font-medium"
 
         div class: "flex items-start" do
           div class: "h-5 flex items-center" do
@@ -64,7 +72,7 @@ class Filters::FormFields < BaseComponent
             checkbox(operation.should_archive, class: "focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded")
           end
           div class: "ml-3 text-sm" do
-            mount Shared::FieldLabel, operation.should_archive, "Send to archive"
+            mount Shared::FieldLabel, operation.should_archive, "Skip inbox (send to archive)"
           end
         end
 
@@ -95,7 +103,8 @@ class Filters::FormFields < BaseComponent
           end
         end
 
-        mount Shared::Field, operation.should_forward_to, "Forward to", &.email_input
+        mount Shared::Field, operation.should_forward_to, "Forward to", &.text_input
+        small "Enter up to 5 unique placeholders like 'invoicing@{{customer_domain}}', and you can give them values later!", class: "ml-2 text-primary-700 font-medium"
       end
     end
   end

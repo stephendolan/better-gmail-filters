@@ -106,7 +106,7 @@ class Filters::ShowPage < MainLayout
                       render_on_off_icon(filter.should_archive)
 
                       span class: "ml-2 flex-1 w-0 truncate" do
-                        text "Send to archive"
+                        text "Skip inbox (send to archive)"
                       end
                     end
                   end
