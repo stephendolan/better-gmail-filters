@@ -27,7 +27,9 @@ class Filters::FormFields < BaseComponent
 
         div do
           mount Shared::Field, operation.search_query, "Gmail search query", &.textarea
-          small "Enter up to 5 unique placeholders like 'from:receipts@{{invoice_company}}', and you can give them values later!", class: "ml-2 text-primary-700 font-medium"
+          if operation.search_query.valid?
+            small "Enter up to 5 unique placeholders like 'from:receipts@{{invoice_company}}', and you can give them values later!", class: "ml-2 text-primary-700 font-medium"
+          end
         end
       end
 
@@ -56,7 +58,9 @@ class Filters::FormFields < BaseComponent
             end
           end
         end
-        small "Enter up to 5 unique placeholders like 'Accounts/{{customer}}', and you can give them values later!", class: "ml-2 text-primary-700 font-medium"
+        if operation.should_apply_label.valid?
+          small "Enter up to 5 unique placeholders like 'Accounts/{{customer}}', and you can give them values later!", class: "ml-2 text-primary-700 font-medium"
+        end
 
         div class: "flex items-start" do
           div class: "h-5 flex items-center" do
@@ -104,7 +108,9 @@ class Filters::FormFields < BaseComponent
         end
 
         mount Shared::Field, operation.should_forward_to, "Forward to", &.text_input
-        small "Enter up to 5 unique placeholders like 'invoicing@{{customer_domain}}', and you can give them values later!", class: "ml-2 text-primary-700 font-medium"
+        if operation.should_forward_to.valid?
+          small "Enter up to 5 unique placeholders like 'invoicing@{{customer_domain}}', and you can give them values later!", class: "ml-2 text-primary-700 font-medium"
+        end
       end
     end
   end

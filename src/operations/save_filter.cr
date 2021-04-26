@@ -18,22 +18,23 @@ class SaveFilter < Filter::SaveOperation
 
   before_save do
     set_creator
-    validate_not_over_placeholder_limit
+    set_placeholders
+    validate_placeholder_limit_unreached
   end
-
-  after_save create_filter_placeholders
 
   private def set_creator
     creator_id.value = creator.id
   end
 
-  private def validate_not_over_placeholder_limit
-    placeholder_limit = 5
-    placeholder_count = [
-      StringWithPlaceholders.new(search_query.value),
-      StringWithPlaceholders.new(should_apply_label.value),
-      StringWithPlaceholders.new(should_forward_to.value),
-    ].sum(&.placeholders.size)
+  private def set_placeholders
+    placeholders.value = derived_placeholders_from_form
+  end
+
+  private def validate_placeholder_limit_unreached
+    return if creator.active_subscription?
+
+    placeholder_limit = Subscription::FREE_TIER_PLACEHOLDER_LIMIT
+    placeholder_count = derived_placeholders_from_form.size
     placeholders_to_remove = placeholder_count - placeholder_limit
 
     if placeholder_count > placeholder_limit
@@ -41,22 +42,11 @@ class SaveFilter < Filter::SaveOperation
     end
   end
 
-  private def create_filter_placeholders(saved_filter : Filter)
-    placeholders = saved_filter.placeholders
-
-    # Remove placeholders that are no longer necessary
-    FilterPlaceholderQuery.new.filter_id(saved_filter.id).name.lower.not.in(placeholders).delete
-
-    # Add new placeholders
-    placeholders.each do |placeholder_name|
-      next unless (FilterPlaceholderQuery.new.filter_id(saved_filter.id).name.lower.eq(placeholder_name).select_count == 0)
-
-      SaveFilterPlaceholder.create!(
-        filter: saved_filter,
-        current_user: creator,
-        name: placeholder_name,
-        values: [] of String
-      )
-    end
+  private def derived_placeholders_from_form
+    [
+      StringWithPlaceholders.new(search_query.value),
+      StringWithPlaceholders.new(should_apply_label.value),
+      StringWithPlaceholders.new(should_forward_to.value),
+    ].flat_map(&.placeholders).uniq!
   end
 end

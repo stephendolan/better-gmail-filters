@@ -10,8 +10,12 @@ class Filters::ShowPage < MainLayout
             text filter.name
           end
           if (filter_category = filter.category)
-            para class: "mt-1 text-sm text-gray-500" do
-              text filter_category.label
+            para class: "mt-1 flex space-x-1 text-sm text-gray-500" do
+              tag "svg", class: "h-5 w-5", fill: "currentColor", viewBox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg" do
+                tag "path", d: "M2 6a2 2 0 012-2h5l2 2h5a2 2 0 012 2v6a2 2 0 01-2 2H4a2 2 0 01-2-2V6z"
+              end
+
+              span filter_category.label
             end
           end
         end
@@ -30,41 +34,30 @@ class Filters::ShowPage < MainLayout
     section do
       div class: "bg-white shadow sm:rounded-lg" do
         div class: "px-4 py-5 sm:px-6" do
-          dl class: "grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2" do
+          dl class: "grid grid-cols-1 gap-x-4 gap-y-6 sm:grid-cols-2" do
             div class: "sm:col-span-2" do
               dt class: "text-sm font-medium text-gray-500" do
                 text "Gmail search query"
               end
-              dd class: "mt-1 border-l-8 border-primary-600 bg-gray-50 py-2 pl-2 text-sm text-gray-900" do
+              dd class: "mt-1 rounded-l border-l-8 border-primary-600 bg-gray-50 py-3 pl-2 text-sm font-medium text-gray-900" do
                 text filter.search_query
               end
             end
 
-            if filter.filter_placeholders.empty?
+            if filter.placeholders.empty?
               dt class: "text-sm font-medium text-gray-500" do
                 text "No placeholders. Use '{{ my_placeholder }}' in your search query to create some!"
               end
             else
               div class: "sm:col-span-2" do
                 dt class: "text-sm font-medium text-gray-500" do
-                  text "Placeholders (#{pluralize(filter.search_permutations.size, "dynamic search")})"
+                  text "Placeholders"
                 end
                 dd class: "mt-1 py-2 text-sm text-gray-900 space-y-2" do
-                  filter.filter_placeholders.each do |placeholder|
-                    div class: "max-w-lg flex rounded-md shadow-sm" do
-                      link to: FilterPlaceholders::Edit.with(placeholder.id), class: "inline-flex items-center px-3 py-1 rounded-l-md border border-r-0 border-gray-300 bg-gray-50 hover:bg-gray-100 text-primary-700 hover:text-primary-900 sm:text-sm font-medium" do
-                        tag "svg", class: "h-4 w-4", fill: "currentColor", viewBox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg" do
-                          tag "path", d: "M13.586 3.586a2 2 0 112.828 2.828l-.793.793-2.828-2.828.793-.793zM11.379 5.793L3 14.172V17h2.828l8.38-8.379-2.83-2.828z"
-                        end
-
-                        span placeholder.name, class: "ml-1"
-                      end
-                      span class: "flex-1 block px-3 py-1 rounded-r-md w-full min-w-0 sm:text-sm border border-gray-300" do
-                        if placeholder.values.empty?
-                          text "No value set"
-                        else
-                          text placeholder.values.join(", ")
-                        end
+                  ul class: "flex flex-wrap space-x-2" do
+                    filter.placeholders.each do |placeholder|
+                      li class: "inline-flex items-center px-3 py-1 border border-gray-300 bg-gray-50 text-primary-700 sm:text-sm font-medium rounded-md shadow-sm" do
+                        text placeholder
                       end
                     end
                   end
