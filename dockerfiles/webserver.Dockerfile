@@ -21,6 +21,8 @@ RUN yarn prod
 
 # Build the Lucky tasks binaries
 FROM crystallang/crystal:1.0.0-alpine as lucky_build
+RUN apk --no-cache add yaml-static
+ENV LUCKY_ENV=production
 WORKDIR /tmp_lucky_build
 COPY . .
 COPY --from=crystal_dependencies /tmp_crystal/lib lib
