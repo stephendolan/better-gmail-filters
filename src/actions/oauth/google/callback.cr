@@ -38,9 +38,8 @@ class OAuth::Google::Callback < BrowserAction
     team = SaveTeam.create!(name: "Personal")
 
     user = SaveUser.create!(
-      **default_google_user_params(google_user),
+      **default_google_user_params(google_user, refresh_token),
       email: google_user.email,
-      google_refresh_token: refresh_token,
     )
 
     SaveTeamUser.create!(
@@ -54,15 +53,18 @@ class OAuth::Google::Callback < BrowserAction
 
   # Updates a user from google, containing everything *except* the email address.
   private def update_user_from_google(user : User, google_user : GoogleUser) : User
+    refresh_token = google_user.refresh_token || user.google_refresh_token
+
     SaveUser.update!(
       user,
-      **default_google_user_params(google_user)
+      **default_google_user_params(google_user, refresh_token),
     )
   end
 
-  private def default_google_user_params(google_user : GoogleUser) : NamedTuple
+  private def default_google_user_params(google_user : GoogleUser, refresh_token : String) : NamedTuple
     {
       google_id:                      google_user.id,
+      google_refresh_token:           refresh_token,
       google_access_token:            google_user.access_token,
       google_access_token_expires_at: google_user.access_token_expiration_time,
       first_name:                     google_user.first_name,
