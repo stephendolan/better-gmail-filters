@@ -25,7 +25,7 @@ WORKDIR /tmp_lucky_build
 COPY . .
 COPY --from=crystal_dependencies /tmp_crystal/lib lib
 COPY --from=webpack_build /tmp_webpack/public public
-RUN crystal build tasks.cr -o /usr/local/bin/lucky
+RUN crystal build --static --release tasks.cr -o /usr/local/bin/lucky
 
 # Build the application binary in a Crystal container
 FROM crystallang/crystal:1.0.0-alpine as webserver_build
