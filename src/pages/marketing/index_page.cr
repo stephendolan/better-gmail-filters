@@ -23,7 +23,7 @@ class Marketing::IndexPage < AuthLayout
                 text " Gmail's interface for managing filters sucks, so we fixed it. Group your filters with categories, adjust filter actions intuitively, and generate complex dynamic filters with placeholders."
               end
               div class: "mt-8" do
-                link OAuth::Google::Connect, class: "w-5/12 inline-flex items-center justify-center py-4 px-8 space-x-2 border border-gray-400 rounded-md shadow-sm bg-white font-medium text-gray-900 hover:bg-gray-50" do
+                link OAuth::Google::Connect, class: "w-full sm:w-5/12 inline-flex items-center justify-center py-4 px-8 space-x-2 border border-gray-400 rounded-md shadow-sm bg-white font-medium text-gray-900 hover:bg-gray-50" do
                   span "Sign in with "
                   span "Google", class: "sr-only"
                   render_google_logo
