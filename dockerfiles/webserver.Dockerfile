@@ -19,6 +19,12 @@ COPY . .
 COPY --from=node_dependencies /tmp_node/node_modules node_modules
 RUN yarn prod
 
+# Build the Lucky tasks binaries
+FROM crystallang/crystal:1.0.0-alpine as lucky_build
+WORKDIR /tmp_lucky_build
+COPY . .
+RUN crystal build tasks.cr -o /usr/local/bin/lucky
+
 # Build the application binary in a Crystal container
 FROM crystallang/crystal:1.0.0-alpine as binary_build
 RUN apk --no-cache add yaml-static
@@ -34,6 +40,7 @@ FROM alpine
 ENV LUCKY_ENV=production
 ENV NODE_ENV=production
 WORKDIR /app
+COPY --from=lucky_build /usr/local/bin/lucky lucky
 COPY --from=binary_build /usr/local/bin/lucky-app lucky-app
 COPY --from=webpack_build /tmp_webpack/public public
 CMD ["./lucky-app"]
