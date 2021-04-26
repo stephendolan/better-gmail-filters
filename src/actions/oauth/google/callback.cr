@@ -8,7 +8,7 @@ class OAuth::Google::Callback < BrowserAction
     if (user = UserQuery.new.google_id(google_user.id).first?)
       sign_in(update_user_from_google(user, google_user))
 
-      flash.success = "Authentication with Google successful. Welcome back!"
+      flash.success = "Welcome back!"
       redirect Home::Index
     else
       sign_in(new_user_from_google(google_user))

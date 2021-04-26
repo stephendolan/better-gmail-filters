@@ -110,8 +110,8 @@ class Subscriptions::IndexPage < AuthLayout
   private def render_pro_plan_benefits
     benefits = [
       "Unlimited filters",
+      "Unlimited dynamic filter variants",
       "Unlimited filter categories",
-      "Unlimited filter placeholders",
     ]
 
     ul class: "space-y-4" do
