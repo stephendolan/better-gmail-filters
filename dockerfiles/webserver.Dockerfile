@@ -23,6 +23,7 @@ RUN yarn prod
 FROM crystallang/crystal:1.0.0-alpine as lucky_build
 WORKDIR /tmp_lucky_build
 COPY . .
+COPY --from=crystal_dependencies /tmp_crystal/lib lib
 RUN crystal build tasks.cr -o /usr/local/bin/lucky
 
 # Build the application binary in a Crystal container
