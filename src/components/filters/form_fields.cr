@@ -26,7 +26,7 @@ class Filters::FormFields < BaseComponent
         end
 
         div do
-          mount Shared::Field, operation.search_query, &.textarea
+          mount Shared::Field, operation.search_query, "Gmail search query", &.textarea
           small "Enter up to 5 unique placeholders like '{{placeholder}}', and you can give them values later!", class: "ml-2 text-primary-700 font-medium"
         end
       end
@@ -43,7 +43,12 @@ class Filters::FormFields < BaseComponent
       hr
 
       div class: "mt-6 sm:mt-5 space-y-6 sm:space-y-5" do
-        mount Shared::Field, operation.should_apply_label, "Apply label"
+        mount Shared::Field, operation.should_apply_label, "Apply label" do |input_html|
+          input_html.select_input do
+            select_prompt("Select label") if operation.should_apply_label.nil?
+            options_for_select(operation.should_apply_label, label_options)
+          end
+        end
 
         div class: "flex items-start" do
           div class: "h-5 flex items-center" do
@@ -98,6 +103,14 @@ class Filters::FormFields < BaseComponent
   private def category_options
     CategoryQuery.new.owner_id(current_user.id).map do |category|
       {category.label, category.id}
+    end
+  end
+
+  private def label_options
+    label_list = Google::LabelList.for(current_user)
+
+    label_list.map do |label|
+      {label.name, label.name}
     end
   end
 end

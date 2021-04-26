@@ -1,14 +1,9 @@
 class User < BaseModel
   include Carbon::Emailable
+  include Users::GoogleAuthenticatable
 
   table do
     column email : String
-
-    column google_id : String
-    column google_access_token : String
-    column google_access_token_expires_at : Time
-    column google_refresh_token : String
-
     column first_name : String?
     column last_name : String?
     column image_url : String?
@@ -24,6 +19,11 @@ class User < BaseModel
     return nil unless first_name || last_name
 
     [first_name, last_name].compact.join(" ")
+  end
+
+  # Shortcut to determine whether or not the user is considered "subscribed"
+  def active_subscription? : Bool
+    subscription.try(&.is_active?) || false
   end
 
   # While the Team schema structure supports many teams, we only functionally

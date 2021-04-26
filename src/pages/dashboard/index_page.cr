@@ -21,7 +21,7 @@ class Dashboard::IndexPage < MainLayout
         end
       end
 
-      unless current_user.subscription.try(&.is_active?)
+      unless current_user.active_subscription? || categories.size.zero?
         div class: "px-4 pt-5 sm:px-6" do
           render_free_tier_progress_bar
         end

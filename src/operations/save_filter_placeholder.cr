@@ -36,19 +36,19 @@ class SaveFilterPlaceholder < FilterPlaceholder::SaveOperation
   # This looks more complex than it is due to how we calculate usage
   # by combinations of dynamic filters.
   private def validate_not_over_filter_limit
-    return if current_user.subscription.try(&.is_active?)
+    return if current_user.active_subscription?
 
     filter_limit = Subscription::FREE_TIER_FILTER_LIMIT
     new_count = filter.siblings.flat_map(&.search_permutations).size
     current_placeholder_count = values.value.try(&.size) || 0
 
     if (existing_placeholder = record)
-      new_count += existing_placeholder.siblings.product(&.values.size) * current_placeholder_count
+      new_count += existing_placeholder.siblings.reject(&.values.empty?).product(&.values.size) * current_placeholder_count
     else
       new_count += filter.filter_placeholders!.product(&.values.size) * current_placeholder_count
     end
 
-    if new_count >= filter_limit
+    if new_count > filter_limit
       value_list.add_error "took you over the free filter limit (#{new_count} / #{filter_limit}). Remove some placeholder values, or upgrade for unlimited dynamic filters"
     end
   end

@@ -1,6 +1,7 @@
 class Filters::EditPage < MainLayout
   needs operation : SaveFilter
   needs filter : Filter
+
   quick_def page_title, "Edit Filter with id: #{filter.id}"
 
   def content

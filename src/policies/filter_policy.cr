@@ -25,7 +25,7 @@ class FilterPolicy < ApplicationPolicy(Filter)
 
   private def over_trial_limit?
     return true unless (signed_in_user = user)
-    return false if signed_in_user.subscription.try(&.is_active?)
+    return false if signed_in_user.active_subscription?
 
     filter_limit = Subscription::FREE_TIER_FILTER_LIMIT
     signed_in_user.filters.flat_map(&.search_permutations).size >= filter_limit

@@ -33,7 +33,7 @@ class Filters::ShowPage < MainLayout
           dl class: "grid grid-cols-1 gap-x-4 gap-y-8 sm:grid-cols-2" do
             div class: "sm:col-span-2" do
               dt class: "text-sm font-medium text-gray-500" do
-                text "Search query"
+                text "Gmail search query"
               end
               dd class: "mt-1 border-l-8 border-primary-600 bg-gray-50 py-2 pl-2 text-sm text-gray-900" do
                 text filter.search_query
