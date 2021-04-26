@@ -9,7 +9,7 @@ class OAuth::GoogleUser
   getter image : String?
   getter access_token : String
   getter access_token_expiration_time : Time
-  getter refresh_token : String
+  getter refresh_token : String?
 
   def initialize(user : MultiAuth::User)
     @id = account_id_from_uid(user.uid)
@@ -28,8 +28,6 @@ class OAuth::GoogleUser
     if oauth.is_a? OAuth2::AccessToken
       if (user_refresh_token = oauth.refresh_token)
         @refresh_token = user_refresh_token
-      else
-        raise "Expected OAuth refresh token from Google."
       end
 
       @access_token = oauth.access_token

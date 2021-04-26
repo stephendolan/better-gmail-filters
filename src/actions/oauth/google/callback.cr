@@ -29,13 +29,18 @@ class OAuth::Google::Callback < BrowserAction
     redirect Home::Index
   end
 
-  # The only thing we do differently for new User creation is adding an email.
+  # The only thing we do differently for new User creation is adding an email and refresh token.
   private def new_user_from_google(google_user : GoogleUser) : User
+    unless (refresh_token = google_user.refresh_token)
+      raise "New users must have OAuth refresh token from Google."
+    end
+
     team = SaveTeam.create!(name: "Personal")
 
     user = SaveUser.create!(
       **default_google_user_params(google_user),
-      email: google_user.email
+      email: google_user.email,
+      google_refresh_token: refresh_token,
     )
 
     SaveTeamUser.create!(
@@ -58,7 +63,6 @@ class OAuth::Google::Callback < BrowserAction
   private def default_google_user_params(google_user : GoogleUser) : NamedTuple
     {
       google_id:                      google_user.id,
-      google_refresh_token:           google_user.refresh_token,
       google_access_token:            google_user.access_token,
       google_access_token_expires_at: google_user.access_token_expiration_time,
       first_name:                     google_user.first_name,
