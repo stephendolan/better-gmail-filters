@@ -1,5 +1,6 @@
 class Filters::ShowPage < MainLayout
   needs filter : Filter
+
   quick_def page_title, filter.name
 
   def content
@@ -62,6 +63,37 @@ class Filters::ShowPage < MainLayout
                     end
                   end
                 end
+              end
+
+              div data_controller: "modal", class: "sm:col-span-2" do
+                dt class: "text-sm font-medium text-gray-500 flex items-center space-x-1" do
+                  span "Variants"
+                  tag "svg", data_action: "click->modal#show", class: "h-5 w-5 cursor-pointer text-primary-600 hover:text-primary-500", fill: "currentColor", viewBox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg" do
+                    tag "path", clip_rule: "evenodd", d: "M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z", fill_rule: "evenodd"
+                  end
+                end
+                dd class: "mt-1 py-2 text-sm text-gray-900 space-y-2" do
+                  ul class: "space-y-2" do
+                    if filter.variants.empty?
+                      div class: "text-sm font-medium text-gray-500" do
+                        span "You haven't created any variants yet. "
+                        span "Click here", data_action: "click->modal#show", class: "text-primary-600 hover:text-primary-500 cursor-pointer underline "
+                        span " to get started!"
+                      end
+                    else
+                      filter.variants.each do |variant|
+                        div do
+                          variant.replacement_objects.each do |replacement|
+                            span replacement.placeholder
+                            span replacement.value
+                          end
+                        end
+                      end
+                    end
+                  end
+                end
+
+                render_filter_variant_form_modal
               end
             end
 
@@ -185,6 +217,49 @@ class Filters::ShowPage < MainLayout
     else
       tag "svg", class: "flex-shrink-0 h-5 w-5 text-gray-300", fill: "none", stroke: "currentColor", viewBox: "0 0 24 24", xmlns: "http://www.w3.org/2000/svg" do
         tag "path", d: "M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z", stroke_linecap: "round", stroke_linejoin: "round", stroke_width: "2"
+      end
+    end
+  end
+
+  private def render_filter_variant_form_modal
+    div data_modal_target: "modal", class: "hidden fixed z-10 inset-0 overflow-y-auto" do
+      div class: "flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0" do
+        # Background overlay
+        div data_action: "click->modal#hide", aria_hidden: "true", class: "fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+
+        # Trick the modal into being centered
+        span aria_hidden: "true", class: "hidden sm:inline-block sm:align-middle sm:h-screen" do
+          raw "&#8203;"
+        end
+
+        div aria_labelledby: "modal-headline", aria_modal: "true", class: "inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6", role: "dialog" do
+          div do
+            div class: "mt-3 text-center sm:mt-5" do
+              h3 "Create a new filter variant", class: "text-lg leading-6 font-medium text-gray-900", id: "modal-headline"
+
+              div class: "mt-2" do
+                para class: "text-sm text-gray-500" do
+                  text "Fill in each of your placeholders with a value. We'll take care of the rest."
+                end
+              end
+            end
+          end
+
+          form_for FilterVariants::Create.with(filter.id), class: "space-y-2 text-gray-900" do
+            div class: "py-4 space-y-2" do
+              mount FilterVariants::FormFields, filter: filter
+            end
+
+            div class: "mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense" do
+              button class: "w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary-600 text-base font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 sm:col-start-2 sm:text-sm", type: "submit", data_disable_with: "Submitting..." do
+                text "Submit"
+              end
+              button data_action: "click->modal#hide", class: "mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 sm:mt-0 sm:col-start-1 sm:text-sm", type: "button" do
+                text "Cancel"
+              end
+            end
+          end
+        end
       end
     end
   end

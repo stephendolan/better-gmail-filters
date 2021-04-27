@@ -2,6 +2,7 @@ class Filter < BaseModel
   table do
     belongs_to category : Category
     belongs_to creator : User
+    has_many variants : FilterVariant
 
     column name : String
     column search_query : String
@@ -16,18 +17,17 @@ class Filter < BaseModel
     column should_apply_label : String?
   end
 
+  # We always want to access placeholders sorted alphabetically
+  def placeholders : Array(String)
+    previous_def.sort
+  end
+
   def siblings(in_same_category : Bool = true) : FilterQuery
     if in_same_category
       FilterQuery.new.category_id(category_id).id.not.eq(id)
     else
       FilterQuery.new.creator_id(creator_id).id.not.eq(id)
     end
-  end
-
-  def derived_placeholders : Array(String)
-    StringWithPlaceholders.new(search_query).placeholders |
-      StringWithPlaceholders.new(should_apply_label).placeholders |
-      StringWithPlaceholders.new(should_forward_to).placeholders
   end
 
   def search_permutations : Array(String)
