@@ -100,10 +100,20 @@ class Filters::ShowPage < MainLayout
                             end
                           end
 
-                          variant.replacement_objects.each do |replacement|
-                            div do
-                              span "#{replacement.placeholder}: ", class: "font-medium"
-                              span replacement.value
+                          replacements = variant.replacement_objects
+                          filter.placeholders.each do |placeholder|
+                            value = replacements.find { |replacement| replacement.placeholder == placeholder }.try(&.value)
+
+                            if value
+                              div do
+                                span "#{placeholder}: ", class: "font-medium"
+                                span value
+                              end
+                            else
+                              div class: "font-bold text-red-600" do
+                                span "#{placeholder}: ", class: "font-medium"
+                                span "Not defined"
+                              end
                             end
                           end
                         end
