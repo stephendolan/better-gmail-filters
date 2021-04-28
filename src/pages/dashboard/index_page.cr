@@ -8,7 +8,7 @@ class Dashboard::IndexPage < MainLayout
   def content
     div class: "bg-white overflow-hidden shadow rounded-lg" do
       div class: "border-b border-gray-200 px-4 py-5 sm:px-6" do
-        div class: "-ml-4 -mt-2 flex items-center justify-between flex-wrap sm:flex-nowrap" do
+        div class: "-ml-4 -mt-2 flex flex-col sm:flex-row items-center justify-center sm:justify-between" do
           div class: "ml-4 mt-2" do
             h3 class: "text-lg leading-6 font-medium text-gray-900" do
               text "Welcome back, #{current_user.first_name || current_user.email}!"
@@ -41,7 +41,7 @@ class Dashboard::IndexPage < MainLayout
     ul class: "space-y-10" do
       categories.each do |category|
         li do
-          div class: "bg-gray-200 px-4 py-2 rounded-lg flex justify-between items-center" do
+          div class: "bg-gray-200 px-4 py-2 rounded-lg flex flex-col sm:flex-row space-y-1 sm:space-y-0 justify-between items-center" do
             h3 class: "text-lg leading-6 font-medium text-gray-900" do
               text category.label
             end
@@ -120,31 +120,41 @@ class Dashboard::IndexPage < MainLayout
   end
 
   private def render_filter(filter : Filter)
-    div class: "relative rounded-lg border border-gray-300 bg-white px-6 py-5 shadow-sm flex items-center space-x-3 hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500" do
-      div class: "flex-shrink-0" do
-        div class: "h-10 w-10 bg-primary-600 rounded-full flex items-center justify-center" do
-          render_filter_icon
-        end
-      end
-      div class: "flex-1 min-w-0" do
-        link to: Filters::Show.with(filter.id), class: "focus:outline-none" do
-          span aria_hidden: "true", class: "absolute inset-0"
-
-          para class: "text-sm font-medium text-gray-900" do
-            text filter.name
-          end
-
-          para class: "text-sm text-gray-500 truncate" do
-            text filter.search_query
-          end
-        end
-      end
-      if !filter.variants.empty?
+    div class: "relative rounded-lg border border-gray-300 bg-white shadow-sm hover:border-gray-400 focus-within:ring-2 focus-within:ring-offset-2 focus-within:ring-primary-500" do
+      div class: "flex items-center px-6 py-5 space-x-3" do
         div class: "flex-shrink-0" do
-          div class: "bg-primary-600 rounded-full flex items-center justify-center text-xs text-white px-2 py-1" do
-            text "#{filter.variants.size} dynamic filters"
+          div class: "h-10 w-10 bg-primary-600 rounded-full flex items-center justify-center" do
+            render_filter_icon
           end
         end
+        div class: "flex-1 min-w-0" do
+          link to: Filters::Show.with(filter.id), class: "focus:outline-none" do
+            span aria_hidden: "true", class: "absolute inset-0"
+
+            para class: "text-sm font-medium text-gray-900" do
+              text filter.name
+            end
+
+            para class: "text-sm text-gray-500 truncate" do
+              text filter.search_query
+            end
+          end
+        end
+        if !filter.variants.empty?
+          div class: "hidden sm:block flex-shrink-0" do
+            div class: "bg-primary-600 rounded-full flex items-center justify-center text-xs text-white px-2 py-1" do
+              text "#{filter.variants.size} dynamic filters"
+            end
+          end
+        end
+      end
+
+      div class: "px-6 py-1 flex items-center space-x-1 border-t border-gray-200 rounded-b-lg bg-gray-50" do
+        tag "svg", class: "h-4 w-4 text-yellow-500", fill: "currentColor", viewBox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg" do
+          tag "path", clip_rule: "evenodd", d: "M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z", fill_rule: "evenodd"
+        end
+
+        span filter.actions_string, class: "text-gray-400 text-sm"
       end
     end
   end
@@ -165,13 +175,13 @@ class Dashboard::IndexPage < MainLayout
     end
 
     div class: "space-y-2" do
-      div class: "flex items-center justify-between" do
+      div class: "flex items-center justify-center sm:justify-between" do
         div do
           link to: Subscriptions::Index, class: "text-xs font-semibold inline-block py-1 px-2 uppercase rounded-full text-primary-600 hover:text-primary-700 bg-primary-200 hover:bg-primary-300" do
             text "#{filter_count} / #{filter_limit} filters in free tier"
           end
         end
-        div class: "text-right" do
+        div class: "hidden sm:block text-right" do
           span class: "text-xs font-semibold inline-block text-primary-600" do
             text "#{free_tier_usage_percent}%"
           end

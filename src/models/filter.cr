@@ -17,6 +17,22 @@ class Filter < BaseModel
     column should_apply_label : String?
   end
 
+  def actions_string : String
+    actions = [] of String
+
+    actions.push "apply label" if should_apply_label
+    actions.push "mark as read" if should_mark_as_read?
+    actions.push "skip inbox" if should_archive?
+    actions.push "star" if should_star?
+    actions.push "never mark spam" if should_never_mark_spam?
+    actions.push "mark as important" if should_mark_important?
+    actions.push "forward" if should_forward_to
+
+    actions.map(&.capitalize)
+
+    actions.join(", ")
+  end
+
   # We always want to access placeholders sorted alphabetically
   def placeholders : Array(String)
     previous_def.sort
