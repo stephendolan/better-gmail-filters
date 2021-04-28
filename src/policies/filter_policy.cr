@@ -28,6 +28,6 @@ class FilterPolicy < ApplicationPolicy(Filter)
     return false if signed_in_user.active_subscription?
 
     filter_limit = Subscription::FREE_TIER_FILTER_LIMIT
-    signed_in_user.filters.flat_map(&.search_permutations).size >= filter_limit
+    signed_in_user.filters.sum(&.variant_count) >= filter_limit
   end
 end

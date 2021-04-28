@@ -16,6 +16,6 @@ class FilterVariants::Create < BrowserAction
   end
 
   private def filter_from_params(id : String)
-    FilterQuery.new.preload_category.preload_variants.find(id)
+    FilterQuery.new.preload_category.find(id)
   end
 end

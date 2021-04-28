@@ -40,7 +40,7 @@ class Filters::ShowPage < MainLayout
               dt class: "text-sm font-medium text-gray-500" do
                 text "Gmail search query"
               end
-              dd class: "mt-1 rounded-l border-l-8 border-primary-600 bg-gray-50 py-3 pl-2 text-sm font-medium text-gray-900" do
+              dd class: "mt-1 rounded-l shadow-sm border-l-8 border-primary-600 bg-gray-50 py-3 pl-2 text-sm font-medium text-gray-900" do
                 text filter.search_query
               end
             end
@@ -68,24 +68,43 @@ class Filters::ShowPage < MainLayout
               div data_controller: "modal", class: "sm:col-span-2" do
                 dt class: "text-sm font-medium text-gray-500 flex items-center space-x-1" do
                   span "Variants"
-                  tag "svg", data_action: "click->modal#show", class: "h-5 w-5 cursor-pointer text-primary-600 hover:text-primary-500", fill: "currentColor", viewBox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg" do
-                    tag "path", clip_rule: "evenodd", d: "M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z", fill_rule: "evenodd"
+
+                  if FilterPolicy.new(current_user).create?
+                    tag "svg", data_action: "click->modal#show", class: "h-5 w-5 cursor-pointer text-primary-600 hover:text-primary-500", fill: "currentColor", viewBox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg" do
+                      tag "path", clip_rule: "evenodd", d: "M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z", fill_rule: "evenodd"
+                    end
+                  else
+                    tag "svg", class: "h-5 w-5 cursor-disabled text-gray-300", fill: "currentColor", viewBox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg" do
+                      tag "path", clip_rule: "evenodd", d: "M10 18a8 8 0 100-16 8 8 0 000 16zm1-11a1 1 0 10-2 0v2H7a1 1 0 100 2h2v2a1 1 0 102 0v-2h2a1 1 0 100-2h-2V7z", fill_rule: "evenodd"
+                    end
+
+                    div do
+                      span "("
+                      link "Upgrade", to: Subscriptions::Index, class: "text-primary-600 hover:text-primary-500 underline"
+                      span " for unlimited variants)"
+                    end
                   end
                 end
                 dd class: "mt-1 py-2 text-sm text-gray-900 space-y-2" do
                   ul class: "space-y-2" do
                     if filter.variants.empty?
                       div class: "text-sm font-medium text-gray-500" do
-                        span "You haven't created any variants yet. "
-                        span "Click here", data_action: "click->modal#show", class: "text-primary-600 hover:text-primary-500 cursor-pointer underline "
-                        span " to get started!"
+                        span "You haven't created any variants yet. Click the '+' button above to get started!"
                       end
                     else
                       filter.variants.each do |variant|
-                        div do
+                        div class: "flex items-center flex-wrap space-x-3 bg-gray-50 rounded shadow-sm px-2 py-2" do
+                          link to: FilterVariants::Delete.with(variant.id), class: "text-red-600 hover:text-red-400 cursor-pointer", data_confirm: "Are you sure you want to remove this variant? This can't be undone." do
+                            tag "svg", class: "h-5 w-5", fill: "currentColor", viewBox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg" do
+                              tag "path", clip_rule: "evenodd", d: "M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z", fill_rule: "evenodd"
+                            end
+                          end
+
                           variant.replacement_objects.each do |replacement|
-                            span replacement.placeholder
-                            span replacement.value
+                            div do
+                              span "#{replacement.placeholder}: ", class: "font-medium"
+                              span replacement.value
+                            end
                           end
                         end
                       end

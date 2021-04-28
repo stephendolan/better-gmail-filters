@@ -22,6 +22,14 @@ class Filter < BaseModel
     previous_def.sort
   end
 
+  def variant_count : Number
+    if variants!.empty?
+      1
+    else
+      variants!.size
+    end
+  end
+
   def siblings(in_same_category : Bool = true) : FilterQuery
     if in_same_category
       FilterQuery.new.category_id(category_id).id.not.eq(id)

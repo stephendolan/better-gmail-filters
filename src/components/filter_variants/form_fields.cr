@@ -5,9 +5,12 @@ class FilterVariants::FormFields < BaseComponent
     # We have to render this so that Lucky sees a valid FilterVariant form
     input type: "hidden", name: "filter_variant:unused"
 
-    filter.placeholders.each do |placeholder|
+    filter.placeholders.each_with_index do |placeholder, index|
+      attributes = [:required]
+      attributes.push(:autofocus) if index == 0
+
       label placeholder, for: "placeholder:#{placeholder}", class: label_classes
-      input type: "text", value: "Boop", name: "placeholder:#{placeholder}", attrs: [:required], class: input_classes
+      input type: "text", name: "placeholder:#{placeholder}", attrs: attributes, class: input_classes
     end
   end
 

@@ -139,9 +139,11 @@ class Dashboard::IndexPage < MainLayout
           end
         end
       end
-      div class: "flex-shrink-0" do
-        div class: "bg-primary-600 rounded-full flex items-center justify-center text-xs text-white px-2 py-1" do
-          text "#{filter.search_permutations.size} dynamic filters"
+      if !filter.variants.empty?
+        div class: "flex-shrink-0" do
+          div class: "bg-primary-600 rounded-full flex items-center justify-center text-xs text-white px-2 py-1" do
+            text "#{filter.variants.size} dynamic filters"
+          end
         end
       end
     end
@@ -155,7 +157,7 @@ class Dashboard::IndexPage < MainLayout
 
   private def render_free_tier_progress_bar
     filter_limit = Subscription::FREE_TIER_FILTER_LIMIT
-    filter_count = categories.flat_map(&.filters.flat_map(&.search_permutations)).size
+    filter_count = categories.flat_map(&.filters.flat_map(&.variant_count)).sum
 
     free_tier_usage_percent = ((filter_count / filter_limit) * 100).to_i
     if free_tier_usage_percent >= 100
