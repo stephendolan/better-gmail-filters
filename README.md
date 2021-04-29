@@ -1,8 +1,6 @@
 # ☘️ Lucky Jumpstart
 
-This is a template project for web applications using [Lucky](https://luckyframework.org).
-
-![Lucky Jumpstart CI](https://github.com/stephendolan/lucky_jumpstart/workflows/Lucky%20Jumpstart%20CI/badge.svg)
+This application was generated from the [Lucky Jumpstart](https://github.com/stephendolan/lucky_jumpstart) template.
 
 ### How to use it?
 
