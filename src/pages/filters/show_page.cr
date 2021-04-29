@@ -112,7 +112,7 @@ class Filters::ShowPage < MainLayout
                             else
                               div class: "font-bold text-red-600" do
                                 span "#{placeholder}: ", class: "font-medium"
-                                span "Not defined"
+                                span "Not set"
                               end
                             end
                           end
