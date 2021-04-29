@@ -3,7 +3,7 @@ class Shared::Navbar < BaseComponent
   needs simple : Bool = false
 
   def render
-    nav class: "bg-white shadow", data_controller: "toggle" do
+    nav class: "bg-white shadow-sm z-50", data_controller: "toggle" do
       div class: "max-w-7xl mx-auto px-4 sm:px-6 lg:px-8" do
         div class: "flex justify-between items-center h-16" do
           render_left_navbar

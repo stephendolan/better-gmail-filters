@@ -1,4 +1,4 @@
-class Policies::RefundsPage < MainLayout
+class Policies::RefundsPage < AuthLayout
   def page_title
     "Refund Policy"
   end

@@ -1,4 +1,4 @@
-class Policies::Privacy::SubprocessorsPage < MainLayout
+class Policies::Privacy::SubprocessorsPage < AuthLayout
   def page_title
     "Subprocessors"
   end

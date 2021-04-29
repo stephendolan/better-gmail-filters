@@ -1,4 +1,4 @@
-class Support::IndexPage < MainLayout
+class Support::IndexPage < AuthLayout
   def page_title
     "Support"
   end

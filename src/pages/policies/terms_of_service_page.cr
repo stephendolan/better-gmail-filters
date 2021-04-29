@@ -1,4 +1,4 @@
-class Policies::TermsOfServicePage < MainLayout
+class Policies::TermsOfServicePage < AuthLayout
   def page_title
     "Terms of Service"
   end

@@ -1,4 +1,4 @@
-class Policies::PrivacyPage < MainLayout
+class Policies::PrivacyPage < AuthLayout
   def page_title
     "Privacy Policy"
   end

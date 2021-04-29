@@ -1,4 +1,4 @@
-class Policies::CancellationsPage < MainLayout
+class Policies::CancellationsPage < AuthLayout
   def page_title
     "Cancellation Policy"
   end
