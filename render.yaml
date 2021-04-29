@@ -9,7 +9,6 @@ services:
     name: Better Gmail Filters
     env: docker
     dockerfilePath: "./dockerfiles/webserver.Dockerfile"
-    dockerCommand: "./lucky db.migrate && ./lucky-app"
     healthCheckPath: /
     domains:
       - bettergmailfilters.com
