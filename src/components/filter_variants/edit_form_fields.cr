@@ -1,5 +1,6 @@
-class FilterVariants::FormFields < BaseComponent
+class FilterVariants::EditFormFields < BaseComponent
   needs filter : Filter
+  needs variant : FilterVariant
 
   def render
     # We have to render this so that Lucky sees a valid FilterVariant form
@@ -10,7 +11,7 @@ class FilterVariants::FormFields < BaseComponent
       attributes.push(:autofocus) if index == 0
 
       label placeholder, for: "placeholder:#{placeholder}", class: label_classes
-      input type: "text", name: "placeholder:#{placeholder}", attrs: attributes, class: input_classes
+      input type: "text", value: variant.replacement_objects.find { |replacement| replacement.placeholder == placeholder }.try(&.value) || "", name: "placeholder:#{placeholder}", attrs: attributes, class: input_classes
     end
   end
 

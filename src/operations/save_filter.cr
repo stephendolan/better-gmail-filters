@@ -20,6 +20,7 @@ class SaveFilter < Filter::SaveOperation
     set_creator
     set_placeholders
     validate_placeholder_limit_unreached
+    update_variants
   end
 
   private def set_creator
@@ -39,6 +40,22 @@ class SaveFilter < Filter::SaveOperation
 
     if placeholder_count > placeholder_limit
       search_query.add_error "has a few too many placeholders (#{placeholder_count} / #{placeholder_limit}). You need to remove #{pluralize(placeholders_to_remove, "placeholder")}"
+    end
+  end
+
+  # When a Filter is updated, the variants may no longer be valid if a placeholder is removed.
+  #
+  # This ensures that variant replacement JSON is always up-to-date with valid Filter placeholder values.
+  private def update_variants
+    return unless (filter_id = id.value)
+
+    new_placeholders = derived_placeholders_from_form
+    return if ((placeholders.original_value || [] of String) - new_placeholders).empty?
+
+    FilterVariantQuery.new.filter_id(filter_id).each do |variant|
+      new_replacements = variant.replacement_objects.reject! { |replacement| !new_placeholders.includes?(replacement.placeholder) }
+      new_replacement_object = FilterVariants::ReplacementSet.new(new_replacements)
+      UpdateFilterVariantReplacements.update!(variant, replacements: JSON.parse(new_replacement_object.to_json))
     end
   end
 

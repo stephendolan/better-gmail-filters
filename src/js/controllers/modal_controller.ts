@@ -22,6 +22,13 @@ export default class extends Controller {
 
     if (autofocusInput) {
       autofocusInput.focus();
+      this.setCursorToEnd(autofocusInput);
     }
+  }
+
+  private setCursorToEnd(element: HTMLInputElement): void {
+    const initialValue = element.value;
+    element.value = "";
+    element.value = initialValue;
   }
 }

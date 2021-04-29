@@ -1,0 +1,40 @@
+databases:
+  - name: better_gmail_filters_db_production
+    databaseName: better_gmail_filters
+    user: better_gmail_filters
+    ipAllowList: []
+
+services:
+  - type: web
+    name: better_gmail_filters
+    env: docker
+    dockerfilePath: "./dockerfiles/webserver.Dockerfile"
+    dockerCommand: "./lucky db.migrate && ./lucky-app"
+    healthCheckPath: /
+    domains:
+      - bettergmailfilters.com
+    envVars:
+      - key: DATABASE_URL
+        fromDatabase:
+          name: mysite
+          property: connectionString
+      - key: APP_DOMAIN
+        value: bettergmailfilters.com
+      - key: LUCKY_ENV
+        value: production
+      - key: NODE_ENV
+        value: production
+      - key: SECRET_KEY_BASE
+        sync: false
+      - key: GOOGLE_CLIENT_ID
+        sync: false
+      - key: GOOGLE_SECRET_KEY
+        sync: false
+      - key: FATHOM_SITE_ID
+        sync: false
+      - key: SENTRY_DSN
+        sync: false
+      - key: STRIPE_API_KEY
+        sync: false
+      - key: STRIPE_WEBHOOK_SIGNING_SECRET
+        sync: false

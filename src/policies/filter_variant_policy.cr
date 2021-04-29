@@ -1,9 +1,3 @@
-class FilterVariantPolicy < ApplicationPolicy(FilterVariant)
-  def create?
-    user ? true : false
-  end
-
-  def delete?
-    create?
-  end
+class FilterVariantPolicy < ApplicationPolicy(Filter)
+  delegate create?, update?, delete?, to: FilterPolicy.new(user: user, record: record)
 end

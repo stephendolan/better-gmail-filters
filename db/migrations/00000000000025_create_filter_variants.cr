@@ -1,4 +1,4 @@
-class CreateFilterVariants::V20210426202102 < Avram::Migrator::Migration::V1
+class CreateFilterVariants::V00000000000025 < Avram::Migrator::Migration::V1
   def migrate
     create table_for(FilterVariant) do
       primary_key id : UUID

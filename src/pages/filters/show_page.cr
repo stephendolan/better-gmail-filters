@@ -87,16 +87,27 @@ class Filters::ShowPage < MainLayout
                 end
                 dd class: "mt-1 py-2 text-sm text-gray-900 space-y-2" do
                   ul class: "space-y-2" do
-                    if filter.variants.empty?
+                    if filter.variants.empty? && FilterPolicy.new(current_user).create?
                       div class: "text-sm font-medium text-gray-500" do
                         span "You haven't created any variants yet. Click the '+' button above to get started!"
                       end
                     else
                       filter.variants.each do |variant|
-                        div class: "flex items-center flex-wrap space-x-3 bg-gray-50 rounded shadow-sm px-2 py-2" do
-                          link to: FilterVariants::Delete.with(variant.id), class: "text-red-600 hover:text-red-400 cursor-pointer", data_confirm: "Are you sure you want to remove this variant? This can't be undone." do
-                            tag "svg", class: "h-5 w-5", fill: "currentColor", viewBox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg" do
-                              tag "path", clip_rule: "evenodd", d: "M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z", fill_rule: "evenodd"
+                        div data_controller: "modal", class: "flex items-center flex-wrap space-x-3 bg-gray-50 rounded shadow-sm px-2 py-2" do
+                          if FilterPolicy.new(current_user, filter).delete?
+                            link to: FilterVariants::Delete.with(variant.id), class: "text-red-600 hover:text-red-400 cursor-pointer", data_confirm: "Are you sure you want to remove this variant? This can't be undone." do
+                              tag "svg", class: "h-5 w-5", fill: "currentColor", viewBox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg" do
+                                tag "path", clip_rule: "evenodd", d: "M10 18a8 8 0 100-16 8 8 0 000 16zM7 9a1 1 0 000 2h6a1 1 0 100-2H7z", fill_rule: "evenodd"
+                              end
+                            end
+                          end
+
+                          if FilterPolicy.new(current_user, filter).update?
+                            div class: "text-primary-600 hover:text-primary-400 cursor-pointer", data_action: "click->modal#show" do
+                              tag "svg", class: "h-5 w-5", fill: "currentColor", viewBox: "0 0 20 20", xmlns: "http://www.w3.org/2000/svg" do
+                                tag "path", d: "M17.414 2.586a2 2 0 00-2.828 0L7 10.172V13h2.828l7.586-7.586a2 2 0 000-2.828z"
+                                tag "path", clip_rule: "evenodd", d: "M2 6a2 2 0 012-2h4a1 1 0 010 2H4v10h10v-4a1 1 0 112 0v4a2 2 0 01-2 2H4a2 2 0 01-2-2V6z", fill_rule: "evenodd"
+                              end
                             end
                           end
 
@@ -116,13 +127,15 @@ class Filters::ShowPage < MainLayout
                               end
                             end
                           end
+
+                          render_filter_variant_edit_form_modal(variant)
                         end
                       end
                     end
                   end
                 end
 
-                render_filter_variant_form_modal
+                render_filter_variant_new_form_modal
               end
             end
 
@@ -250,7 +263,7 @@ class Filters::ShowPage < MainLayout
     end
   end
 
-  private def render_filter_variant_form_modal
+  private def render_filter_variant_new_form_modal
     div data_modal_target: "modal", class: "hidden fixed z-10 inset-0 overflow-y-auto" do
       div class: "flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0" do
         # Background overlay
@@ -276,7 +289,50 @@ class Filters::ShowPage < MainLayout
 
           form_for FilterVariants::Create.with(filter.id), class: "space-y-2 text-gray-900" do
             div class: "py-4 space-y-2" do
-              mount FilterVariants::FormFields, filter: filter
+              mount FilterVariants::NewFormFields, filter: filter
+            end
+
+            div class: "mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense" do
+              button class: "w-full inline-flex justify-center rounded-md border border-transparent shadow-sm px-4 py-2 bg-primary-600 text-base font-medium text-white hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 sm:col-start-2 sm:text-sm", type: "submit", data_disable_with: "Submitting..." do
+                text "Submit"
+              end
+              button data_action: "click->modal#hide", class: "mt-3 w-full inline-flex justify-center rounded-md border border-gray-300 shadow-sm px-4 py-2 bg-white text-base font-medium text-gray-700 hover:bg-gray-50 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500 sm:mt-0 sm:col-start-1 sm:text-sm", type: "button" do
+                text "Cancel"
+              end
+            end
+          end
+        end
+      end
+    end
+  end
+
+  private def render_filter_variant_edit_form_modal(variant : FilterVariant)
+    div data_modal_target: "modal", class: "hidden fixed z-10 inset-0 overflow-y-auto" do
+      div class: "flex items-end justify-center min-h-screen pt-4 px-4 pb-20 text-center sm:block sm:p-0" do
+        # Background overlay
+        div data_action: "click->modal#hide", aria_hidden: "true", class: "fixed inset-0 bg-gray-500 bg-opacity-75 transition-opacity"
+
+        # Trick the modal into being centered
+        span aria_hidden: "true", class: "hidden sm:inline-block sm:align-middle sm:h-screen" do
+          raw "&#8203;"
+        end
+
+        div aria_labelledby: "modal-headline", aria_modal: "true", class: "inline-block align-bottom bg-white rounded-lg px-4 pt-5 pb-4 text-left overflow-hidden shadow-xl transform transition-all sm:my-8 sm:align-middle sm:max-w-lg sm:w-full sm:p-6", role: "dialog" do
+          div do
+            div class: "mt-3 text-center sm:mt-5" do
+              h3 "Edit this filter variant", class: "text-lg leading-6 font-medium text-gray-900", id: "modal-headline"
+
+              div class: "mt-2" do
+                para class: "text-sm text-gray-500" do
+                  text "Fill in each of your placeholders with a value. We'll take care of the rest."
+                end
+              end
+            end
+          end
+
+          form_for FilterVariants::Update.with(variant.id), class: "space-y-2 text-gray-900" do
+            div class: "py-4 space-y-2" do
+              mount FilterVariants::EditFormFields, filter: filter, variant: variant
             end
 
             div class: "mt-5 sm:mt-6 sm:grid sm:grid-cols-2 sm:gap-3 sm:grid-flow-row-dense" do
