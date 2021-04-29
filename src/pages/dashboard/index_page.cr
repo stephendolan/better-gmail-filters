@@ -154,7 +154,13 @@ class Dashboard::IndexPage < MainLayout
           tag "path", clip_rule: "evenodd", d: "M11.3 1.046A1 1 0 0112 2v5h4a1 1 0 01.82 1.573l-7 10A1 1 0 018 18v-5H4a1 1 0 01-.82-1.573l7-10a1 1 0 011.12-.38z", fill_rule: "evenodd"
         end
 
-        span filter.actions_string, class: "text-gray-400 text-sm"
+        span class: "text-gray-400 text-sm" do
+          if (action_text = filter.actions_string).empty?
+            text "You didn't select any filter actions"
+          else
+            text action_text
+          end
+        end
       end
     end
   end
