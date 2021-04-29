@@ -18,7 +18,7 @@ services:
           name: Better Gmail Filters Primary
           property: connectionString
       - key: APP_DOMAIN
-        value: bettergmailfilters.com
+        value: https://bettergmailfilters.com
       - key: LUCKY_ENV
         value: production
       - key: NODE_ENV

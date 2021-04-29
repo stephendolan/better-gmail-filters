@@ -11,6 +11,7 @@ class Shared::LayoutHead < BaseComponent
 
       utf8_charset
       title "#{Application.settings.name} - #{@page_title}"
+      meta name: "description", content: Application.settings.description
       css_link asset("css/app.css"), data_turbolinks_track: "reload"
       js_link asset("js/app.js"), defer: "true", data_turbolinks_track: "reload"
       meta name: "turbolinks-cache-control", content: "no-cache"
