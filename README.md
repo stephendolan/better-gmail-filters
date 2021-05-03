@@ -42,7 +42,7 @@ There are quite a few things I find myself adding to every Lucky application out
 
 - 🤖 &nbsp; A handy dandy [Dependabot](https://dependabot.com/) configuration file
 
-- 🔀 &nbsp; A [Mergify.io](https://mergify.io) configuration file to handle auto-merging dependency updates
+- 🔀 &nbsp; A [GitHub Actions Workflow](https://github.com/stephendolan/better-gmail-filters/blob/main/.github/workflows/automerge.yml) to handle auto-merging dependency updates
 
 - A working GitHub Actions workflow with:
   - 💃 &nbsp; [Prettier](https://prettier.io/)
