@@ -20,7 +20,7 @@ class Marketing::IndexPage < AuthLayout
                 span " Gmail filters", class: "block text-primary-600 xl:inline"
               end
               para class: "mt-3 text-base text-gray-500 sm:mt-5 sm:text-lg sm:max-w-xl sm:mx-auto md:mt-5 md:text-xl lg:mx-0" do
-                text " Gmail's interface for managing filters sucks, so we fixed it. Group your filters with categories, adjust filter actions intuitively, and generate complex dynamic filters with placeholders."
+                text "Gmail's interface for managing filters sucks, so we fixed it. Group your filters with categories, adjust filter actions intuitively, and generate complex dynamic filters with placeholders."
               end
               div class: "mt-8" do
                 link OAuth::Google::Connect, class: "w-full sm:w-5/12 inline-flex items-center justify-center py-4 px-8 space-x-2 border border-gray-400 rounded-md shadow-sm bg-white font-medium text-gray-900 hover:bg-gray-50" do
@@ -99,7 +99,7 @@ class Marketing::IndexPage < AuthLayout
               end
               div class: "ml-4" do
                 dt class: "text-lg leading-6 font-medium text-gray-900" do
-                  text "Import straight into gmail"
+                  text "Import straight into Gmail"
                 end
                 dd class: "mt-2 text-base text-gray-500" do
                   text "Once you've got your filters created in #{Application.settings.name}, you're two clicks away from having them imported into Gmail."
