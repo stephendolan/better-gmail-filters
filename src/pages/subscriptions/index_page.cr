@@ -62,7 +62,7 @@ class Subscriptions::IndexPage < AuthLayout
                     end
                   end
                   para class: "mt-5 text-lg text-gray-500" do
-                    text "The most cost-effective way to learn."
+                    text "Our most cost-effective plan."
                   end
                 end
                 div class: "flex-1 flex flex-col justify-between px-6 pt-6 pb-8 bg-gray-50 space-y-6 sm:p-10 sm:pt-6" do
