@@ -1,6 +1,23 @@
 require "xml"
 
 class FilterSerializer < BaseSerializer
+  def initialize(@filter : Filter)
+  end
+
+  def render
+    XML.build(indent: "  ") do |xml|
+      xml.element "feed", xmlns: "http://www.w3.org/2005/Atom", "xmlns:apps": "http://schemas.google.com/apps/2006" do
+        xml.element "title" { xml.text Application.settings.name }
+
+        if @filter.variants.empty?
+          FilterSerializer.render_filter_xml(xml, @filter)
+        else
+          FilterSerializer.render_filter_variant_xml(xml, @filter)
+        end
+      end
+    end
+  end
+
   def self.for_collection(filters : FilterQuery)
     XML.build(indent: "  ") do |xml|
       xml.element "feed", xmlns: "http://www.w3.org/2005/Atom", "xmlns:apps": "http://schemas.google.com/apps/2006" do

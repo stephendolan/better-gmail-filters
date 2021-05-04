@@ -11,6 +11,10 @@ class FilterPolicy < ApplicationPolicy(Filter)
     end
   end
 
+  def export?
+    show?
+  end
+
   def create?
     index? && !over_trial_limit?
   end

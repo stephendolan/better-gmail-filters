@@ -22,6 +22,7 @@ class Filters::ShowPage < MainLayout
         end
 
         div class: "flex-shrink-0 flex items-center space-x-3" do
+          mount UI::Button, &.link "Export", to: Filters::Export.with(filter.id)
           mount UI::Button, &.link "Edit", to: Filters::Edit.with(filter.id)
           mount UI::Button, &.link "Delete", to: Filters::Delete.with(filter.id), data_confirm: "Are you sure?"
         end
