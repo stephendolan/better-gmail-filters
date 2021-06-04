@@ -15,7 +15,7 @@ class Dashboard::IndexPage < MainLayout
             end
           end
           div class: "ml-4 mt-2 flex-shrink-0 flex space-x-3" do
-            mount UI::Button, &.link "Export filters to XML", to: Filters::Index
+            mount UI::Button, &.link "Import Filters to Gmail", to: FilterExports::Index
             mount UI::Button, &.link "New category", to: Categories::New
           end
         end
