@@ -1121,10 +1121,10 @@
   dependencies:
     "@babel/types" "^7.3.0"
 
-"@types/canvas-confetti@^1.4.1":
-  version "1.4.1"
-  resolved "https://registry.yarnpkg.com/@types/canvas-confetti/-/canvas-confetti-1.4.1.tgz#404ae6525f324d7a98ca402fb7d52fad57f78ff1"
-  integrity sha512-6Eo0HGHIYkAsJ7lThiblpefXhMFiuogUgt5zi2dc+mGjsMKVqzNPdoboiYzEWk9SiMaALOXPdWdztZP3veJNkQ==
+"@types/canvas-confetti@^1.4.2":
+  version "1.4.2"
+  resolved "https://registry.yarnpkg.com/@types/canvas-confetti/-/canvas-confetti-1.4.2.tgz#35c99fc904492fdcc6515c742509e04f3527211c"
+  integrity sha512-t45KUDHlwrD9PJVRHc5z1SlXhO82BQEgMKUXGEV1KnWLFMPA6Y5LfUsLTHHzH9KcKDHZLEiYYH5nIDcjRKWNTg==
 
 "@types/clean-css@^4.2.4":
   version "4.2.4"
