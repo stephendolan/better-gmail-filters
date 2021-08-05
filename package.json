@@ -21,7 +21,7 @@
     "prod": "mix --production"
   },
   "devDependencies": {
-    "@babel/compat-data": "^7.14.9",
+    "@babel/compat-data": "^7.15.0",
     "@types/canvas-confetti": "^1.4.2",
     "@types/node": "^16.4.11",
     "@types/webpack-env": "^1.16.2",
