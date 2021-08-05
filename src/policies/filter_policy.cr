@@ -4,8 +4,12 @@ class FilterPolicy < ApplicationPolicy(Filter)
   end
 
   def show?
-    if (signed_in_user = user) && (filter = record)
-      signed_in_user.id == filter.creator_id
+    if (filter = record)
+      if (signed_in_user = user)
+        signed_in_user.id == filter.creator_id || filter.is_public?
+      else
+        filter.is_public?
+      end
     else
       false
     end
@@ -20,11 +24,15 @@ class FilterPolicy < ApplicationPolicy(Filter)
   end
 
   def update?
-    show?
+    if (filter = record) && (signed_in_user = user)
+      signed_in_user.id == filter.creator_id
+    else
+      false
+    end
   end
 
   def delete?
-    show?
+    update?
   end
 
   private def over_trial_limit?

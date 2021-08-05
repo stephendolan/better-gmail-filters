@@ -1,4 +1,4 @@
-class Filters::ShowPage < MainLayout
+class Filters::ShowPage < PublicLayout
   needs filter : Filter
 
   quick_def page_title, filter.name
@@ -22,9 +22,11 @@ class Filters::ShowPage < MainLayout
         end
 
         div class: "flex-shrink-0 flex items-center space-x-3" do
-          mount UI::Button, &.link "Export", to: Filters::Export.with(filter.id)
-          mount UI::Button, &.link "Edit", to: Filters::Edit.with(filter.id)
-          mount UI::Button, &.link "Delete", to: Filters::Delete.with(filter.id), data_confirm: "Are you sure?"
+          policy = FilterPolicy.new(current_user, filter)
+
+          mount UI::Button, &.link "Export", to: Filters::Export.with(filter.id) if policy.export?
+          mount UI::Button, &.link "Edit", to: Filters::Edit.with(filter.id) if policy.update?
+          mount UI::Button, &.link "Delete", to: Filters::Delete.with(filter.id), data_confirm: "Are you sure?" if policy.delete?
         end
       end
 

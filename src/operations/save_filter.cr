@@ -4,6 +4,7 @@ class SaveFilter < Filter::SaveOperation
   needs creator : User
 
   permit_columns name,
+    is_public,
     search_query,
     category_id,
     should_mark_as_read,

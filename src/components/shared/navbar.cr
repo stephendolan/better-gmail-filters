@@ -100,8 +100,8 @@ class Shared::Navbar < BaseComponent
 
   private def render_right_navbar(no_user : Nil)
     div class: "hidden sm:flex sm:space-x-2 items-center" do
-      mount UI::Button, &.link("Sign Up", to: SignIns::New, flow_id: "nav-sign-up-button")
-      link "Sign In", to: SignIns::New, class: "text-gray-300 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-sm font-medium", flow_id: "nav-sign-in-button"
+      mount UI::Button, &.link("Sign up", to: SignIns::New, flow_id: "nav-sign-up-button")
+      link "Sign in", to: SignIns::New, class: "text-gray-500 bg-gray-100 hover:bg-gray-700 hover:text-white block px-3 py-2 rounded-md text-sm font-medium", flow_id: "nav-sign-in-button"
     end
   end
 end

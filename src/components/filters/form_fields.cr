@@ -31,6 +31,15 @@ class Filters::FormFields < BaseComponent
             small "Enter up to 5 unique placeholders like 'from:receipts@{{invoice_company}}', and you can give them values later!", class: "ml-2 text-primary-700 font-medium"
           end
         end
+
+        div class: "flex items-start" do
+          div class: "h-5 flex items-center" do
+            checkbox(operation.is_public, class: "focus:ring-primary-500 h-4 w-4 text-primary-600 border-gray-300 rounded")
+          end
+          div class: "ml-3 text-sm" do
+            mount Shared::FieldLabel, operation.is_public, "Make this filter public for sharing"
+          end
+        end
       end
 
       div do

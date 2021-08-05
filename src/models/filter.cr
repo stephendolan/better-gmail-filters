@@ -5,6 +5,7 @@ class Filter < BaseModel
     has_many variants : FilterVariant
 
     column name : String
+    column is_public : Bool = false
     column search_query : String
     column placeholders : Array(String)
 
