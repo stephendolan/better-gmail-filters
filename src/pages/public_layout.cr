@@ -11,7 +11,7 @@ abstract class PublicLayout
     html_doctype
 
     html lang: "en" do
-      mount Shared::LayoutHead, page_title: page_title, context: context
+      mount Shared::LayoutHead, page_title: page_title
 
       body class: "min-h-screen flex flex-col bg-gray-100" do
         mount Shared::FlashMessages, context.flash

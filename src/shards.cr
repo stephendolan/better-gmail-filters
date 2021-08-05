@@ -1,8 +1,7 @@
 # Load .env file before any other config or app code.
 require "lucky_env"
 
-# If you use .env files in production or test environments, adjust this accordingly.
-LuckyEnv.load(".env") if Lucky::Env.development?
+LuckyEnv.load?(".env")
 
 # Require your shards here
 require "avram"

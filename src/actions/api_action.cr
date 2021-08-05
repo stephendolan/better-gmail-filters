@@ -11,6 +11,10 @@ abstract class ApiAction < Lucky::Action
   # always have a current_user we can fetch from the session if they exist
   include Authentic::ActionHelpers(User)
 
+  # By default all actions are required to use underscores.
+  # Add 'include Lucky::SkipRouteStyleCheck' to your actions if you wish to ignore this check for specific routes.
+  include Lucky::EnforceUnderscoredRoute
+
   # This method tells Authentic how to find the current user
   private def find_current_user(id) : User?
     UserQuery.new.id(id).first?

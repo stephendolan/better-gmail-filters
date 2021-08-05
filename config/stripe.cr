@@ -6,7 +6,7 @@ class Stripe
 end
 
 Stripe.configure do |settings|
-  if Lucky::Env.test?
+  if LuckyEnv.test?
     settings.api_key = "unused"
     settings.webhook_signing_secret = "unused"
   else

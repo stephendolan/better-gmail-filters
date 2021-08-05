@@ -1,11 +1,9 @@
 class Shared::LayoutHead < BaseComponent
   needs page_title : String
-  # This is used by the 'csrf_meta_tags' method
-  needs context : HTTP::Server::Context
 
   def render
     head do
-      if Lucky::Env.production?
+      if LuckyEnv.production?
         script src: "https://#{Fathom.settings.domain}/script.js", data_site: Fathom.settings.site_id, attrs: [:defer]
       end
 

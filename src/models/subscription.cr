@@ -15,7 +15,7 @@ class Subscription < BaseModel
     end
 
     def self.stripe_price_id
-      if Lucky::Env.production?
+      if LuckyEnv.production?
         "price_1Ijr1pBR9CrjHMLPd0ETbvfH"
       else
         "price_1IjrNUBR9CrjHMLPuqJaJHzJ"
@@ -29,7 +29,7 @@ class Subscription < BaseModel
     end
 
     def self.stripe_price_id
-      if Lucky::Env.production?
+      if LuckyEnv.production?
         "price_1Ijr1pBR9CrjHMLP4N9Igdw6"
       else
         "price_1IjrNUBR9CrjHMLPnUffvlWU"

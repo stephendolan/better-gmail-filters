@@ -1,7 +1,7 @@
 BaseEmail.configure do |settings|
-  if Lucky::Env.production?
+  if LuckyEnv.production?
     settings.adapter = Carbon::DevAdapter.new
-  elsif Lucky::Env.development?
+  elsif LuckyEnv.development?
     settings.adapter = Carbon::DevAdapter.new(print_emails: true)
   else
     settings.adapter = Carbon::DevAdapter.new

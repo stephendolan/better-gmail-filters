@@ -1,5 +1,5 @@
 class GoogleAuthHandler
-  if Lucky::Env.production? || Lucky::Env.development?
+  if LuckyEnv.production? || LuckyEnv.development?
     MultiAuth.config(
       "google",
       google_key_from_env("GOOGLE_CLIENT_ID"),
