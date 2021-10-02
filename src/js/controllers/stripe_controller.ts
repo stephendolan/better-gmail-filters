@@ -1,4 +1,4 @@
-import { Controller } from "stimulus";
+import { Controller } from "@hotwired/stimulus";
 import { loadStripe } from "@stripe/stripe-js/pure";
 
 export default class extends Controller {

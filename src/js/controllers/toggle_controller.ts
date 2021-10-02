@@ -1,4 +1,4 @@
-import { Controller } from "stimulus";
+import { Controller } from "@hotwired/stimulus";
 
 // Toggle elements on and off. Mainly used for items like popup/navigation menus.
 //
