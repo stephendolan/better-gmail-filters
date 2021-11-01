@@ -22,7 +22,7 @@
     "prod": "mix --production"
   },
   "devDependencies": {
-    "@babel/compat-data": "^7.15.0",
+    "@babel/compat-data": "^7.16.0",
     "@types/canvas-confetti": "^1.4.2",
     "@types/node": "^16.11.6",
     "@types/webpack-env": "^1.16.3",
