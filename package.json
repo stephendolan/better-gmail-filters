@@ -12,7 +12,7 @@
     "@tailwindcss/typography": "^0.4.1",
     "canvas-confetti": "^1.4.0",
     "postcss": "^8.3.11",
-    "tailwindcss": "^2.2.18",
+    "tailwindcss": "^2.2.19",
     "turbolinks": "^5.2.0"
   },
   "scripts": {
